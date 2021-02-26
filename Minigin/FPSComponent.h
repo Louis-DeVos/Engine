@@ -10,7 +10,7 @@ class FPSComponent final :
     public BaseComponent
 {
 public:
-    FPSComponent(dae::GameObject* pGameObject);
+    FPSComponent(std::weak_ptr<dae::GameObject> pGameObject);
     ~FPSComponent();
 
     void Update(float dt);
@@ -23,7 +23,7 @@ public:
     FPSComponent& operator=(FPSComponent&& other) = delete;
 
 private:
-    dae::GameObject* m_pGameObject;
+    std::weak_ptr<dae::GameObject> m_pGameObject;
     int m_FPS;
 };
 

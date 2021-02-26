@@ -23,16 +23,14 @@ bool dae::InputManager::ProcessInput()
 			return false;
 		}
 		if (e.type == SDL_KEYDOWN) {
-			
 		}
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 			
 		}
 	}
-
+	
 
 	//PXINPUT_KEYSTROKE stroke = new XINPUT_KEYSTROKE;
-	XINPUT_KEYSTROKE stroke{};
 	auto result = XInputGetKeystroke(0, 0, m_Stroke);
 
 

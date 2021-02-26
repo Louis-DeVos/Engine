@@ -14,7 +14,10 @@ namespace dae
 
 		//void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
-		void AddComponent(BaseComponent* pComponent) { m_ComponentList.push_back(pComponent); }
+		void AddComponent(std::shared_ptr<BaseComponent> pComponent) { m_ComponentList.push_back(pComponent); }
+
+		bool ToBeDestroyed();
+		void SetToBeDestroyed();
 
 		GameObject() = default;
 		~GameObject();
@@ -24,22 +27,24 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 		template <typename T>
-		T* getComponent();
+		std::weak_ptr<T> getComponent();
 
 	private:
 		Transform m_Transform;
-		std::vector<BaseComponent*> m_ComponentList;
+		std::vector<std::shared_ptr<BaseComponent>> m_ComponentList;
+		bool m_ToBeDestroyed{ false };
 	};
 	template<typename T>
-	inline T* GameObject::getComponent()
+	inline std::weak_ptr<T> GameObject::getComponent()
 	{
-		for (BaseComponent* pComponent : m_ComponentList)
+		for (std::shared_ptr<BaseComponent> pComponent : m_ComponentList)
 		{
-			if (dynamic_cast<T*>(pComponent))
+			auto ptr = std::dynamic_pointer_cast<T>(pComponent);
+			if (ptr)
 			{
-				return (T*)pComponent;
+				return std::weak_ptr<T>(ptr);
 			}
 		}
-		return nullptr;
+		return std::weak_ptr<T>();
 	}
 }

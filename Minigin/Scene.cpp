@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "Scene.h"
 #include "GameObject.h"
+#include <Algorithm>
 
 using namespace dae;
 
@@ -10,13 +11,10 @@ Scene::Scene(const std::string& name) : m_Name(name) {}
 
 Scene::~Scene()
 {
-	for (GameObject* pObject : m_Objects)
-	{
-		delete pObject;
-	}
+
 }
 
-void Scene::Add(GameObject* object)
+void Scene::Add(std::shared_ptr<GameObject> object)
 {
 	m_Objects.push_back(object);
 }
@@ -43,5 +41,10 @@ void Scene::Render() const
 	{
 		object->Render();
 	}
+}
+
+void dae::Scene::DestroyObjects()
+{
+	m_Objects.erase(std::remove_if(m_Objects.begin(), m_Objects.end(), [](std::shared_ptr<GameObject> pObject) {return pObject->ToBeDestroyed(); }),m_Objects.end());
 }
 

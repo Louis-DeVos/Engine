@@ -13,7 +13,10 @@
 #include "FPSComponent.h"
 #include "SubjectComponent.h"
 #include "PlayerComponent.h"
+#include "PlayerDeathObserver.h"
 #include "LifeComponent.h"
+#include "ScoreComponent.h"
+#include "ScoreObserver.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -48,41 +51,84 @@ void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	GameObject* go = new GameObject{};
-	RenderComponent* render = new RenderComponent{go};
+	std::shared_ptr<dae::GameObject> go = std::make_shared<GameObject>();
+	std::shared_ptr<RenderComponent> render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(go));
 	render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("background.jpg"));
 	go->AddComponent(render);
 	scene.Add(go);
 
-	go = new GameObject{};
-	render = new RenderComponent{go};
+	go = std::make_shared<GameObject>();
+	render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(go) );
 	render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("logo.png"));
 	go->AddComponent(render);
 	go->SetPosition(216, 180);
 	scene.Add(go);
 
-	Font* font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	go = new GameObject{};
-	go->AddComponent(new TextComponent{ "Programming 4 Assignment", font,go });
-	go->AddComponent(new RenderComponent{go });
+	std::shared_ptr<Font> font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	go = std::make_shared<GameObject>();
+	go->AddComponent(std::make_shared<TextComponent>("Programming 4 Assignment", font,std::weak_ptr<GameObject>(go)));
+	go->AddComponent(std::make_shared<RenderComponent>( std::weak_ptr<GameObject>(go)));
 	go->SetPosition(80, 20);
 	scene.Add(go);
 
-	GameObject* fps = new GameObject{};
-	fps->AddComponent(new FPSComponent{fps});
-	fps->AddComponent(new TextComponent{ "", dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 12), fps});
-	fps->AddComponent(new RenderComponent{fps});
+	std::shared_ptr<dae::GameObject> fps = std::make_shared<GameObject>();
+	fps->AddComponent(std::make_shared<FPSComponent>(std::weak_ptr<GameObject>(fps) ));
+	fps->AddComponent(std::make_shared<TextComponent>(" ", dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 12), std::weak_ptr<GameObject>(fps)));
+	fps->AddComponent(std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(fps)));
 	scene.Add(fps);
 
+	std::shared_ptr<dae::GameObject> lifeCounter = std::make_shared<GameObject>();
+	lifeCounter->AddComponent(std::make_shared<LifeComponent>(std::weak_ptr<GameObject>(lifeCounter)));
+	lifeCounter->AddComponent(std::make_shared<TextComponent>(" ", dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 12), std::weak_ptr<GameObject>(lifeCounter) ));
+	lifeCounter->AddComponent(std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(lifeCounter )));
+	lifeCounter->SetPosition(200, 0);
+	scene.Add(lifeCounter);
+	
+	std::shared_ptr<dae::GameObject> lifeCounter2 = std::make_shared<GameObject>();
+	lifeCounter2->AddComponent(std::make_shared<LifeComponent>(std::weak_ptr<GameObject>(lifeCounter2)));
+	lifeCounter2->AddComponent(std::make_shared<TextComponent>(" ", dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 12), std::weak_ptr<GameObject>(lifeCounter2) ));
+	lifeCounter2->AddComponent(std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(lifeCounter2)));
+	lifeCounter2->SetPosition(200, 10);
+	scene.Add(lifeCounter2);
+	
+	std::shared_ptr<dae::GameObject> scoreCounter = std::make_shared<GameObject>();
+	scoreCounter->AddComponent(std::make_shared<ScoreComponent>(std::weak_ptr<GameObject>(scoreCounter)));
+	scoreCounter->AddComponent(std::make_shared<TextComponent>(" ", dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 12), std::weak_ptr<GameObject>(scoreCounter) ));
+	scoreCounter->AddComponent(std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(scoreCounter)));
+	scoreCounter->SetPosition(300, 0);
+	scene.Add(scoreCounter);
+	
+	std::shared_ptr<dae::GameObject> scoreCounter2 = std::make_shared<GameObject>();
+	scoreCounter2->AddComponent(std::make_shared<ScoreComponent>(std::weak_ptr<GameObject>(scoreCounter2)));
+	scoreCounter2->AddComponent(std::make_shared<TextComponent>(" ", dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 12), std::weak_ptr<GameObject>(scoreCounter2) ));
+	scoreCounter2->AddComponent(std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(scoreCounter2)));
+	scoreCounter2->SetPosition(300, 10);
+	scene.Add(scoreCounter2);
 
-
-	//GameObject* QBert = new GameObject{};
+	std::shared_ptr<dae::GameObject> QBert = std::make_shared<GameObject>();
 	//QBert->AddComponent(new RenderComponent{ QBert });
-	//QBert->AddComponent(new PlayerComponent{ QBert });
-	//QBert->AddComponent(new SubjectComponent{ QBert });
-	//scene.Add(QBert);
+	//render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("background.jpg"));
+	QBert->AddComponent(std::make_shared<PlayerComponent>(QBert));
+	QBert->AddComponent(std::make_shared<SubjectComponent>(QBert));
+	QBert->getComponent<SubjectComponent>().lock()->AddObserver(std::make_shared<PlayerDeathObserver>(lifeCounter->getComponent<LifeComponent>()));
+	QBert->getComponent<SubjectComponent>().lock()->AddObserver(std::make_shared<ScoreObserver>(scoreCounter->getComponent<ScoreComponent>()));
+	scene.Add(QBert);
+	
+	std::shared_ptr<dae::GameObject> QBert2 = std::make_shared<GameObject>();
+	//QBert->AddComponent(new RenderComponent{ QBert });
+	//render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("background.jpg"));
+	QBert2->AddComponent(std::make_shared<PlayerComponent>(QBert2));
+	QBert2->AddComponent(std::make_shared<SubjectComponent>(QBert2));
+	QBert2->getComponent<SubjectComponent>().lock()->AddObserver(std::make_shared<PlayerDeathObserver>(lifeCounter2->getComponent<LifeComponent>()));
+	QBert2->getComponent<SubjectComponent>().lock()->AddObserver(std::make_shared<ScoreObserver>(scoreCounter2->getComponent<ScoreComponent>()));
+	scene.Add(QBert2);
 
-	InputManager::GetInstance().AddCommand(new PlayerDieCommand{ QBert->getComponent<PlayerComponent>() }, VK_GAMEPAD_A, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new PlayerDieCommand{ QBert->getComponent<PlayerComponent>() }, VK_PAD_A, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new PlayerDieCommand{ QBert2->getComponent<PlayerComponent>() }, VK_PAD_B, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 25 }, VK_PAD_X, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 500 }, VK_PAD_Y, XINPUT_KEYSTROKE_KEYDOWN);
+
+	std::cout << "A: Kill player1\nB: Kill player2\nX: Player1 Gains 25 score\nY: Player2 Gains 500 score\n";
 }
 
 void dae::Minigin::Cleanup()
@@ -132,6 +178,8 @@ void dae::Minigin::Run()
 
 			sceneManager.Update(deltaTime);
 			renderer.Render();
+
+			sceneManager.DestroyObjects();
 		}
 	}
 

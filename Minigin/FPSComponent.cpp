@@ -3,7 +3,7 @@
 #include "ResourceManager.h"
 #include "GameObject.h"
 
-FPSComponent::FPSComponent(dae::GameObject* pGameObject)
+FPSComponent::FPSComponent(std::weak_ptr<dae::GameObject> pGameObject)
 	:m_pGameObject{pGameObject}
 	, m_FPS{}
 {
@@ -19,10 +19,10 @@ void FPSComponent::Update(float dt)
 	if (newFps != m_FPS)
 	{
 		m_FPS = newFps;
-		dae::TextComponent* pTextComponent = m_pGameObject->getComponent<dae::TextComponent>();
-		if (pTextComponent != nullptr)
+		auto pTextComponent = m_pGameObject.lock()->getComponent<dae::TextComponent>();
+		if (!pTextComponent.expired())
 		{
-			pTextComponent->SetText(std::to_string(m_FPS) + " FPS");
+			pTextComponent.lock()->SetText(std::to_string(m_FPS) + " FPS");
 		}
 	}
 }

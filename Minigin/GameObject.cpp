@@ -5,15 +5,12 @@
 
 dae::GameObject::~GameObject()
 {
-	for (BaseComponent* pComponent : m_ComponentList)
-	{
-		delete pComponent;
-	}
+
 }
 
 void dae::GameObject::Update(float dt)
 {
-	for (BaseComponent* component: m_ComponentList)
+	for (std::shared_ptr<BaseComponent> component: m_ComponentList)
 	{
 		component->Update(dt);
 	}
@@ -21,7 +18,7 @@ void dae::GameObject::Update(float dt)
 
 void dae::GameObject::FixedUpdate(float dt)
 {
-	for (BaseComponent* component : m_ComponentList)
+	for (std::shared_ptr<BaseComponent> component : m_ComponentList)
 	{
 		component->FixedUpdate(dt);
 	}
@@ -30,7 +27,7 @@ void dae::GameObject::FixedUpdate(float dt)
 void dae::GameObject::Render() const
 {
 	const auto pos = m_Transform.GetPosition();
-	for (BaseComponent* component : m_ComponentList)
+	for (std::shared_ptr<BaseComponent> component : m_ComponentList)
 	{
 		component->Render(pos);
 	}
@@ -45,4 +42,14 @@ void dae::GameObject::Render() const
 void dae::GameObject::SetPosition(float x, float y)
 {
 	m_Transform.SetPosition(x, y, 0.0f);
+}
+
+bool dae::GameObject::ToBeDestroyed()
+{
+	return m_ToBeDestroyed;
+}
+
+void dae::GameObject::SetToBeDestroyed()
+{
+	m_ToBeDestroyed = true;
 }

@@ -12,11 +12,12 @@ namespace dae
 		void Update(float dt);
 		void FixedUpdate(float dt);
 		void Render();
+		void DestroyObjects();
 		~SceneManager();
 
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
-		std::vector<Scene*> m_Scenes;
+		std::vector<std::shared_ptr<Scene>> m_Scenes;
 	};
 }

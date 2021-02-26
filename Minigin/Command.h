@@ -14,9 +14,18 @@ public:
 class PlayerDieCommand final : public Command
 {
 public:
-	~PlayerDieCommand() { delete m_pPlayerComponent; }
-	PlayerDieCommand(PlayerComponent* playerComponent);
+	PlayerDieCommand(std::weak_ptr<PlayerComponent> playerComponent);
 	void Execute() override;
 private:
-	PlayerComponent* m_pPlayerComponent;
+	std::weak_ptr<PlayerComponent> m_pPlayerComponent;
+};
+
+class GainScoreCommand final : public Command
+{
+public:
+	GainScoreCommand(std::weak_ptr<PlayerComponent> playerComponent, int score);
+	void Execute() override;
+private:
+	std::weak_ptr<PlayerComponent> m_pPlayerComponent;
+	int m_GainedScore;
 };

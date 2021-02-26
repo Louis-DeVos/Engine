@@ -11,15 +11,17 @@ class SubjectComponent final :
     public BaseComponent
 {
 public:
-    SubjectComponent(dae::GameObject* pGameObject);
+    SubjectComponent(std::weak_ptr<dae::GameObject> pGameObject);
     ~SubjectComponent();
 
     void Update(float dt);
     void FixedUpdate(float dt);
     void Render(const glm::vec3& transform) const;
     void Notify(Event event) const;
-    void AddObserver(Observer* observer);
-    void RemoveObserver(Observer* observer);
+    void Notify(Event event, int num) const;
+    void Notify(Event event, const std::string& str) const;
+    void AddObserver(std::shared_ptr<Observer> observer);
+    void RemoveObserver(std::shared_ptr<Observer> observer);
 
     SubjectComponent(const SubjectComponent& other) = delete;
     SubjectComponent(SubjectComponent&& other) = delete;
@@ -27,8 +29,8 @@ public:
     SubjectComponent& operator=(SubjectComponent&& other) = delete;
 
 private:
-    dae::GameObject* m_pGameObject;
-    std::vector<Observer*> m_ObserverVector;
+    std::weak_ptr<dae::GameObject> m_pGameObject;
+    std::vector<std::shared_ptr<Observer>> m_ObserverVector;
 
 };
 

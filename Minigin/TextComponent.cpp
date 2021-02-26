@@ -9,7 +9,7 @@
 #include "GameObject.h"
 #include "RenderComponent.h"
 
-dae::TextComponent::TextComponent(const std::string& text, Font* font, dae::GameObject* pGameObject)
+dae::TextComponent::TextComponent(const std::string& text, std::shared_ptr<Font> font, std::weak_ptr<dae::GameObject> pGameObject)
 	: m_NeedsUpdate(true), m_Text(text), m_Font(font)
 	, m_pGameObject{pGameObject}
 {
@@ -18,7 +18,6 @@ dae::TextComponent::TextComponent(const std::string& text, Font* font, dae::Game
 
 dae::TextComponent::~TextComponent()
 {
-	delete m_Font;
 }
 
 void dae::TextComponent::Update(float)
@@ -32,16 +31,16 @@ void dae::TextComponent::Update(float)
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
 		}
 
-		RenderComponent* pRenderComponent = m_pGameObject->getComponent<RenderComponent>();
-		if (pRenderComponent != nullptr)
+		auto pRenderComponent = m_pGameObject.lock()->getComponent<RenderComponent>();
+		if (!pRenderComponent.expired())
 		{
-			dae::Texture2D* pTexture = new dae::Texture2D(SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf));
+			std::shared_ptr<dae::Texture2D> pTexture = std::make_shared<dae::Texture2D>(SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf));
 			if (pTexture == nullptr)
 			{
 				throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 			}
 			SDL_FreeSurface(surf);
-			pRenderComponent->SetTexture(pTexture);
+			pRenderComponent.lock()->SetTexture(pTexture);
 			m_NeedsUpdate = false;
 		}
 	}
