@@ -2,22 +2,21 @@
 #include "MiniginPCH.h"
 #include <iostream>
 #include "GameObject.h"
+#include "PlayerComponent.h"
 
 class Command
 {
-protected:
-	dae::GameObject* GetActor() const { return m_Object; }
-
 public:
-	explicit Command(dae::GameObject* object) : m_Object{object} {};
 	virtual ~Command() = default;
 	virtual void Execute() = 0;
-private:
-	dae::GameObject* m_Object;
 };
 
-//class JumpCommand : public Command
-//{
-//public:
-//	void Execute() override { GetActor()->Jump();}
-//};
+class PlayerDieCommand final : public Command
+{
+public:
+	~PlayerDieCommand() { delete m_pPlayerComponent; }
+	PlayerDieCommand(PlayerComponent* playerComponent);
+	void Execute() override;
+private:
+	PlayerComponent* m_pPlayerComponent;
+};

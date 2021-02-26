@@ -203,9 +203,12 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="LifeComponent.h" />
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="MiniginPCH.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="PlayerDeathObserver.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Renderer.h" />
@@ -225,6 +228,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="LifeComponent.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="MiniginPCH.cpp">
@@ -235,6 +239,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MiniginPCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="PlayerDeathObserver.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

@@ -9,12 +9,13 @@ dae::InputManager::~InputManager()
 	{
 		delete command.pCommand;
 	}
+	delete m_Stroke;
 }
 
 bool dae::InputManager::ProcessInput()
 {
 	/*ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
-	XInputGetState(0, &m_CurrentState);
+	XInputGetState(0, &m_CurrentState);*/
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -29,7 +30,6 @@ bool dae::InputManager::ProcessInput()
 		}
 	}
 
-	return true;*/
 
 	//PXINPUT_KEYSTROKE stroke = new XINPUT_KEYSTROKE;
 	XINPUT_KEYSTROKE stroke{};
@@ -50,6 +50,14 @@ bool dae::InputManager::ProcessInput()
 
 
 	return true;
+}
+
+void dae::InputManager::Destroy()
+{
+	//for (auto command : m_Commands)
+	//{
+	//	delete command.pCommand;
+	//}
 }
 
 void dae::InputManager::AddCommand(Command* pCommand, unsigned button, unsigned flag)

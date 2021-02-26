@@ -10,13 +10,13 @@ Scene::Scene(const std::string& name) : m_Name(name) {}
 
 Scene::~Scene()
 {
-	for (SceneObject* pObject : m_Objects)
+	for (GameObject* pObject : m_Objects)
 	{
 		delete pObject;
 	}
 }
 
-void Scene::Add(SceneObject* object)
+void Scene::Add(GameObject* object)
 {
 	m_Objects.push_back(object);
 }

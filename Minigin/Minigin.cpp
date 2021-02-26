@@ -11,6 +11,9 @@
 #include "GameObject.h"
 #include "Scene.h"
 #include "FPSComponent.h"
+#include "SubjectComponent.h"
+#include "PlayerComponent.h"
+#include "LifeComponent.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -71,6 +74,15 @@ void dae::Minigin::LoadGame() const
 	fps->AddComponent(new RenderComponent{fps});
 	scene.Add(fps);
 
+
+
+	//GameObject* QBert = new GameObject{};
+	//QBert->AddComponent(new RenderComponent{ QBert });
+	//QBert->AddComponent(new PlayerComponent{ QBert });
+	//QBert->AddComponent(new SubjectComponent{ QBert });
+	//scene.Add(QBert);
+
+	InputManager::GetInstance().AddCommand(new PlayerDieCommand{ QBert->getComponent<PlayerComponent>() }, VK_GAMEPAD_A, XINPUT_KEYSTROKE_KEYDOWN);
 }
 
 void dae::Minigin::Cleanup()

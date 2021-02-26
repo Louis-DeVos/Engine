@@ -10,6 +10,7 @@ enum class Event
 class Observer
 {
 public:
-	virtual void OnNotify(dae::GameObject* pGameObject, Event event);
+	virtual ~Observer() {};
+	virtual void OnNotify(dae::GameObject* pGameObject, Event event) = 0;
 };
 

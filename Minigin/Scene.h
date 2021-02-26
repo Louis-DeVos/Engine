@@ -3,12 +3,12 @@
 
 namespace dae
 {
-	class SceneObject;
+	class GameObject;
 	class Scene final
 	{
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
-		void Add(SceneObject* object);
+		void Add(GameObject* object);
 
 		void Update(float dt);
 		void FixedUpdate(float dt);
@@ -24,7 +24,7 @@ namespace dae
 		explicit Scene(const std::string& name);
 
 		std::string m_Name;
-		std::vector <SceneObject*> m_Objects{};
+		std::vector <GameObject*> m_Objects{};
 
 		static unsigned int m_IdCounter; 
 	};

@@ -16,6 +16,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{26019250-2fd0-412c-b82c-e3937bf1b332}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Observers">
+      <UniqueIdentifier>{0ebb3c6a-e33d-4d74-8151-6294977b9c46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -76,6 +79,15 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Observer.h">
+      <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDeathObserver.h">
+      <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -135,6 +147,15 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Observer.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDeathObserver.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -25,6 +25,7 @@ namespace dae
 	public:
 		~InputManager();
 		bool ProcessInput();
+		void Destroy();
 		/*bool IsPressed(unsigned button) const;*/
 		void AddCommand(Command* pCommand, unsigned button, unsigned flag);
 	private:
