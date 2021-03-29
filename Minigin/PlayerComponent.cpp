@@ -2,6 +2,7 @@
 #include "PlayerComponent.h"
 #include "SubjectComponent.h"
 #include "GameObject.h"
+#include "ServiceLocator.h"
 
 PlayerComponent::PlayerComponent(std::weak_ptr<dae::GameObject> pGameObject)
 	:m_pGameObject(pGameObject)
@@ -32,6 +33,8 @@ void PlayerComponent::GainScore(int score)
 
 void PlayerComponent::Die()
 {
+	ServiceLocator::GetSoundSystem().Play();
+
 	--m_Lives;
 	m_pGameObject.lock()->getComponent<SubjectComponent>().lock()->Notify(Event::KillEvent);
 	if (m_Lives==0)

@@ -17,16 +17,35 @@
 #include "LifeComponent.h"
 #include "ScoreComponent.h"
 #include "ScoreObserver.h"
+#include "ServiceLocator.h"
+#include "SoundSystem.h"
 
 using namespace std;
 using namespace std::chrono;
 
 void dae::Minigin::Initialize()
 {
+	_putenv("SDL_AUDIODRIVER=DirectSound");
+
+
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
+
+	if (SDL_Init(SDL_INIT_AUDIO) != 0)
+		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
+
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		std::cerr << "Core::Initialize( ), error when calling Mix_OpenAudio: " << Mix_GetError() << std::endl;
+		return;
+	}
+
+	const int mixerFlags{ MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG };
+	if ((Mix_Init(mixerFlags) & mixerFlags) != mixerFlags)
+		std::cerr << "SDL Mixer failed to initialize! Cause of the error: " << Mix_GetError();
+
 
 	m_Window = SDL_CreateWindow(
 		"Programming 4 assignment",
@@ -42,6 +61,10 @@ void dae::Minigin::Initialize()
 	}
 
 	Renderer::GetInstance().Init(m_Window);
+
+
+	ServiceLocator::RegisterSoundSystem(new SoundSystem());
+	
 }
 
 /**
@@ -123,12 +146,22 @@ void dae::Minigin::LoadGame() const
 	QBert2->getComponent<SubjectComponent>().lock()->AddObserver(std::make_shared<ScoreObserver>(scoreCounter2->getComponent<ScoreComponent>()));
 	scene.Add(QBert2);
 
-	InputManager::GetInstance().AddCommand(new PlayerDieCommand{ QBert->getComponent<PlayerComponent>() }, VK_PAD_A, XINPUT_KEYSTROKE_KEYDOWN);
-	InputManager::GetInstance().AddCommand(new PlayerDieCommand{ QBert2->getComponent<PlayerComponent>() }, VK_PAD_B, XINPUT_KEYSTROKE_KEYDOWN);
-	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 25 }, VK_PAD_X, XINPUT_KEYSTROKE_KEYDOWN);
-	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 500 }, VK_PAD_Y, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new PlayerDieCommand{ QBert->getComponent<PlayerComponent>() }, VK_PAD_LSHOULDER, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new PlayerDieCommand{ QBert2->getComponent<PlayerComponent>() }, VK_PAD_RSHOULDER, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 25 }, VK_PAD_A, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 500 }, VK_PAD_B, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 50 }, VK_PAD_X, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 300 }, VK_PAD_Y, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 25 }, VK_PAD_DPAD_DOWN, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 500 }, VK_PAD_DPAD_RIGHT, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 50 }, VK_PAD_DPAD_LEFT, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 300 }, VK_PAD_DPAD_UP, XINPUT_KEYSTROKE_KEYDOWN);
 
-	std::cout << "A: Kill player1\nB: Kill player2\nX: Player1 Gains 25 score\nY: Player2 Gains 500 score\n";
+	std::cout << "LShoulder: Kill player1\nRShoulder: Kill player2\nA: Player1 Gains 25 score\nB: Player1 Gains 500 score\nX: Player1 Gains 50 score\nY: Player2 Gains 300 score\nDpadDown: Player2 Gains 25 score\nDpadRight: Player2 Gains 500 score\nDpadLeft: Player2 Gains 50 score\nDpadUp: Player2 Gains 300 score\n";
+
+
+	
+
 }
 
 void dae::Minigin::Cleanup()

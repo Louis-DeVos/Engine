@@ -22,5 +22,8 @@ GainScoreCommand::GainScoreCommand(std::weak_ptr<PlayerComponent> playerComponen
 
 void GainScoreCommand::Execute()
 {
-	m_pPlayerComponent.lock()->GainScore(m_GainedScore);
+	if (!m_pPlayerComponent.expired())
+	{
+		m_pPlayerComponent.lock()->GainScore(m_GainedScore);
+	}
 }
