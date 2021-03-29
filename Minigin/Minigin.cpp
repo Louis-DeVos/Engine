@@ -161,11 +161,13 @@ void dae::Minigin::LoadGame() const
 
 
 	
-
+	ServiceLocator::GetSoundSystem()->AddEffect("./../data/Q-bert_Death_Sound.wav",1);
 }
 
 void dae::Minigin::Cleanup()
 {
+	delete ServiceLocator::GetSoundSystem();
+
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;

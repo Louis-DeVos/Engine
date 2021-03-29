@@ -1,6 +1,9 @@
 #pragma once
 #include "SoundSystemInterface.h"
 
+
+
+
 class NullSoundSystem final : public SoundSystemInterface
 {
 public:
@@ -14,8 +17,8 @@ public:
 
 
 	void Play(unsigned int, bool) {};
-	void AddEffect(std::string filePath, unsigned int id) {};
-	void AddMusic(std::string filePath, unsigned int id) {};
+	void AddEffect(std::string, unsigned int ) {};
+	void AddMusic(std::string, unsigned int ) {};
 
 	void Update() {};
 
@@ -34,7 +37,7 @@ class ServiceLocator
 
 
 public:
-	static SoundSystemInterface& GetSoundSystem() { return *m_pSSInstance; }
+	static SoundSystemInterface* GetSoundSystem() { return m_pSSInstance; }
 	static void RegisterSoundSystem(SoundSystemInterface* ss)
 	{
 		m_pSSInstance = (ss == nullptr) ? &m_DefaultSS : ss;

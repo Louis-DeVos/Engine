@@ -33,7 +33,8 @@ void PlayerComponent::GainScore(int score)
 
 void PlayerComponent::Die()
 {
-	ServiceLocator::GetSoundSystem().Play();
+	ServiceLocator::GetSoundSystem()->Play(1,false);
+
 
 	--m_Lives;
 	m_pGameObject.lock()->getComponent<SubjectComponent>().lock()->Notify(Event::KillEvent);

@@ -3,14 +3,21 @@
 #include <string>
 #include <queue>
 #include <map>
+#include <thread>
+#include <mutex>
 
+struct SoundInfo
+{
+	unsigned int Id;
+	bool Music;
+};
 
 class SoundSystem final:
     public SoundSystemInterface
 {
 public:
-	SoundSystem() {};
-	~SoundSystem() {};
+	SoundSystem();
+	~SoundSystem();
 	SoundSystem(const SoundSystem&) = delete;
 	SoundSystem(SoundSystem&&) = delete;
 	SoundSystem& operator=(const SoundSystem&) = delete;
@@ -29,12 +36,10 @@ private:
 	std::map<unsigned int, Mix_Music*> m_MusicMap;
 	std::queue<SoundInfo> m_SoundQueue;
 
-
+	std::thread m_Thread;
+	std::mutex m_Mutex;
+	//std::condition_variable m_ConditionVariable;
+	bool m_ShutDown{false};
 
 };
 
-struct SoundInfo
-{
-	unsigned int Id;
-	bool Music;
-};
