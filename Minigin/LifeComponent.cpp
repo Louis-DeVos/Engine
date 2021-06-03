@@ -2,6 +2,7 @@
 #include "LifeComponent.h"
 #include "TextComponent.h"
 #include "GameObject.h"
+#include <string>
 
 LifeComponent::LifeComponent(std::weak_ptr<dae::GameObject> pGameObject)
 	: m_pGameObject(pGameObject)

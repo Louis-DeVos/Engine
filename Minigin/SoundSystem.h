@@ -5,6 +5,12 @@
 #include <map>
 #include <thread>
 #include <mutex>
+//#include "../3rdParty/SDL2_mixer/include/SDL_mixer.h"
+#include <SDL_mixer.h>
+
+
+
+
 
 struct SoundInfo
 {

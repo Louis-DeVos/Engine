@@ -8,6 +8,8 @@
 #include "Texture2D.h"
 #include "GameObject.h"
 #include "RenderComponent.h"
+#include <string>
+#include <stdexcept>
 
 dae::TextComponent::TextComponent(const std::string& text, std::shared_ptr<Font> font, std::weak_ptr<dae::GameObject> pGameObject)
 	: m_NeedsUpdate(true), m_Text(text), m_Font(font)

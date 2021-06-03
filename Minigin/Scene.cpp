@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "GameObject.h"
 #include <Algorithm>
+#include <string>
 
 using namespace dae;
 

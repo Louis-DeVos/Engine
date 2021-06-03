@@ -1,5 +1,7 @@
 #include "MiniginPCH.h"
 #include "SubjectComponent.h"
+#include <memory>
+#include <string>
 
 SubjectComponent::SubjectComponent(std::weak_ptr<dae::GameObject> pGameObject)
 	:m_pGameObject(pGameObject)

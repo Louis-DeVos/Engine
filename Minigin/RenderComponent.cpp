@@ -2,6 +2,7 @@
 #include "RenderComponent.h"
 #include "Renderer.h"
 #include "GameObject.h"
+#include <memory>
 
 RenderComponent::RenderComponent(std::weak_ptr<dae::GameObject> pGameObject)
 	:m_pTexture{nullptr}

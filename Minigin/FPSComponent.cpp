@@ -2,6 +2,8 @@
 #include "FPSComponent.h"
 #include "ResourceManager.h"
 #include "GameObject.h"
+#include <memory>
+#include <string>
 
 FPSComponent::FPSComponent(std::weak_ptr<dae::GameObject> pGameObject)
 	:m_pGameObject{pGameObject}

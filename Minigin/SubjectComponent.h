@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Observer.h"
+#include <vector>
 
 namespace dae
 {

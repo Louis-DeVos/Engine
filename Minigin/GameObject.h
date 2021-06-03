@@ -1,6 +1,8 @@
 #pragma once
 #include "Transform.h"
 #include "BaseComponent.h"
+#include <vector>
+#include <memory>
 
 namespace dae
 {
@@ -14,6 +16,7 @@ namespace dae
 
 		//void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
+		const Transform& GetTransform() { return m_Transform; }
 		void AddComponent(std::shared_ptr<BaseComponent> pComponent) { m_ComponentList.push_back(pComponent); }
 
 		bool ToBeDestroyed();

@@ -2,6 +2,9 @@
 #include "ScoreComponent.h"
 #include "TextComponent.h"
 #include "GameObject.h"
+#include <memory>
+#include <mutex>
+#include <string>
 
 ScoreComponent::ScoreComponent(std::weak_ptr<dae::GameObject> pGameObject)
 	:m_pGameObject{pGameObject}

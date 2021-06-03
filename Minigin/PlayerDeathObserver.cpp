@@ -1,6 +1,8 @@
 #include "MiniginPCH.h"
 #include "PlayerDeathObserver.h"
 #include "PlayerComponent.h"
+#include <memory>
+#include <iostream>
 
 PlayerDeathObserver::PlayerDeathObserver(std::weak_ptr<LifeComponent> target)
 	: m_pLifeComponent{target}

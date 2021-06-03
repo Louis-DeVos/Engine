@@ -1,5 +1,8 @@
 #include "MiniginPCH.h"
 #include "ScoreObserver.h"
+#include <memory>
+#include <iostream>
+#include <string>
 
 ScoreObserver::ScoreObserver(std::weak_ptr<ScoreComponent> target)
 	:m_pScoreComponent{target}
