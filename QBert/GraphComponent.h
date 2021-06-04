@@ -29,6 +29,7 @@ public:
 
 	void SetConnection(Position pos, std::weak_ptr<GridNodeComponent> connection);
 	std::weak_ptr<GridNodeComponent> GetConnection(Position pos);
+	std::weak_ptr<GridNodeComponent> GetLastConnection(Position pos);
 	glm::vec3 GetWorldPosition();
 	void ChangeState(int stateChange);
 

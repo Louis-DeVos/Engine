@@ -84,6 +84,32 @@ std::weak_ptr<GridNodeComponent> GridNodeComponent::GetConnection(Position pos)
 	return std::shared_ptr<GridNodeComponent>(nullptr);
 }
 
+std::weak_ptr<GridNodeComponent> GridNodeComponent::GetLastConnection(Position pos)
+{
+	if (GetConnection(pos).expired())
+	{
+		return m_pGameObject.lock()->getComponent<GridNodeComponent>();
+	}
+	switch (pos)
+	{
+	case Position::TopLeft:
+		return m_pTopLeft.lock()->GetLastConnection(Position::TopLeft);
+		break;
+	case Position::TopRight:
+		return m_pTopRight.lock()->GetLastConnection(Position::TopRight);
+		break;
+	case Position::BottomRight:
+		return m_pBottomRight.lock()->GetLastConnection(Position::BottomRight);
+		break;
+	case Position::BottomLeft:
+		return m_pBottomLeft.lock()->GetLastConnection(Position::BottomLeft);
+		break;
+	default:
+		break;
+	}
+	return std::shared_ptr<GridNodeComponent>(nullptr);
+}
+
 glm::vec3 GridNodeComponent::GetWorldPosition()
 {
 	return m_pGameObject.lock()->GetTransform().GetPosition();
@@ -102,6 +128,10 @@ void GridNodeComponent::ChangeState(int stateChange)
 		{
 			m_State = m_MaxState;
 		}
+	}
+	if (m_State < 0)
+	{
+		m_State = 0;
 	}
 	m_pGameObject.lock()->getComponent<RenderComponent>().lock()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture(m_TextureName + std::to_string(m_State)+".png"));
 }

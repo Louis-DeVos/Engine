@@ -25,24 +25,24 @@ void CoilyComponent::Update(float dt)
 
 			if (pos.x > targetPos.x)
 			{
-				if (pos.y > targetPos.y)
+				if (pos.y < targetPos.y)
 				{
-					Move(Position::TopLeft);
+					Move(Position::BottomLeft);
 				}
 				else
 				{
-					Move(Position::BottomLeft);
+					Move(Position::TopLeft);
 				}
 			}
 			else
 			{
-				if (pos.y > targetPos.y)
+				if (pos.y < targetPos.y)
 				{
-					Move(Position::TopRight);
+					Move(Position::BottomRight);
 				}
 				else
 				{
-					Move(Position::BottomRight);
+					Move(Position::TopRight);
 				}
 			}
 

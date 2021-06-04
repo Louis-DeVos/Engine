@@ -16,12 +16,14 @@
 #include "../Minigin/ScoreObserver.h"
 #include "../Minigin/ServiceLocator.h"
 #include "../Minigin/SoundSystem.h"
-#include "../Minigin/GraphComponent.h"
+#include "GraphComponent.h"
 #include "QBertComponent.h"
 #include <SDL.h>
 #include "Command.h"
 #include "LevelConstructor.h"
 #include "CoilyComponent.h"
+#include "GreenEnemyComponent.h"
+#include "PurpleEnemyComponent.h"
 
 using namespace dae;
 
@@ -98,11 +100,14 @@ void Game::LoadGame() const
 	std::shared_ptr<dae::GameObject> QBert2 = std::make_shared<GameObject>();
 	//QBert->AddComponent(new RenderComponent{ QBert });
 	//render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("background.jpg"));
-	QBert2->AddComponent(std::make_shared<PlayerComponent>(QBert2));
+	std::shared_ptr<QBertComponent> qbert2Component = std::make_shared<QBertComponent>(QBert2);
+	QBert2->AddComponent(qbert2Component);
 	QBert2->AddComponent(std::make_shared<SubjectComponent>(QBert2));
-	QBert2->getComponent<SubjectComponent>().lock()->AddObserver(std::make_shared<PlayerDeathObserver>(lifeCounter2->getComponent<LifeComponent>()));
-	QBert2->getComponent<SubjectComponent>().lock()->AddObserver(std::make_shared<ScoreObserver>(scoreCounter2->getComponent<ScoreComponent>()));
-	scene.Add(QBert2);
+	render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(QBert2));
+	render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("QBert.png"));
+	QBert2->AddComponent(render);
+	QBert2->getComponent<SubjectComponent>().lock()->AddObserver(std::make_shared<PlayerDeathObserver>(lifeCounter->getComponent<LifeComponent>()));
+	QBert2->getComponent<SubjectComponent>().lock()->AddObserver(std::make_shared<ScoreObserver>(scoreCounter->getComponent<ScoreComponent>()));
 
 
 
@@ -115,6 +120,18 @@ void Game::LoadGame() const
 	Coily->AddComponent(render);
 
 
+
+	std::shared_ptr<dae::GameObject> Slick = std::make_shared<GameObject>();
+	Slick->AddComponent(std::make_shared<GreenEnemyComponent>(Slick));
+	render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(Slick));
+	render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Slick.png"));
+	Slick->AddComponent(render);
+
+	std::shared_ptr<dae::GameObject> ugg = std::make_shared<GameObject>();
+	ugg->AddComponent(std::make_shared<PurpleEnemyComponent>(ugg,1));
+	render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(ugg));
+	render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Wrongway.png"));
+	ugg->AddComponent(render);
 
 	
 	//std::shared_ptr<dae::GameObject> Node = std::make_shared<GameObject>();
@@ -153,17 +170,27 @@ void Game::LoadGame() const
 
 
 	qbertComponent->SetLocation(node);
+	qbert2Component->SetLocation(node.lock()->GetConnection(Position::BottomLeft));
 	Coily->getComponent<CoilyComponent>().lock()->SetTarget(QBert);
 	Coily->getComponent<CoilyComponent>().lock()->SetLocation(node.lock()->GetConnection(Position::BottomRight));
+	Slick->getComponent<GreenEnemyComponent>().lock()->SetLocation(node.lock()->GetConnection(Position::BottomLeft));
+	ugg->getComponent<PurpleEnemyComponent>().lock()->SetLocation(node.lock()->GetLastConnection(Position::BottomLeft));
 
 	scene.Add(QBert);
+	//scene.Add(QBert2);
 	scene.Add(Coily);
+	scene.Add(Slick);
+	scene.Add(ugg);
 
 
 	InputManager::GetInstance().AddCommand(new MoveCommand{ QBert->getComponent<QBertComponent>(), Position::TopLeft }, VK_PAD_LTHUMB_UPLEFT, XINPUT_KEYSTROKE_KEYDOWN);
 	InputManager::GetInstance().AddCommand(new MoveCommand{ QBert->getComponent<QBertComponent>(), Position::TopRight }, VK_PAD_LTHUMB_UPRIGHT, XINPUT_KEYSTROKE_KEYDOWN);
 	InputManager::GetInstance().AddCommand(new MoveCommand{ QBert->getComponent<QBertComponent>(), Position::BottomLeft }, VK_PAD_LTHUMB_DOWNLEFT, XINPUT_KEYSTROKE_KEYDOWN);
 	InputManager::GetInstance().AddCommand(new MoveCommand{ QBert->getComponent<QBertComponent>(), Position::BottomRight }, VK_PAD_LTHUMB_DOWNRIGHT, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new MoveCommand{ QBert2->getComponent<QBertComponent>(), Position::TopLeft }, VK_PAD_Y, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new MoveCommand{ QBert2->getComponent<QBertComponent>(), Position::TopRight }, VK_PAD_B, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new MoveCommand{ QBert2->getComponent<QBertComponent>(), Position::BottomLeft }, VK_PAD_X, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new MoveCommand{ QBert2->getComponent<QBertComponent>(), Position::BottomRight }, VK_PAD_A, XINPUT_KEYSTROKE_KEYDOWN);
 	//InputManager::GetInstance().AddCommand(new PlayerDieCommand{ QBert2->getComponent<PlayerComponent>() }, VK_PAD_RSHOULDER, XINPUT_KEYSTROKE_KEYDOWN);
 	//InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 25 }, VK_PAD_A, XINPUT_KEYSTROKE_KEYDOWN);
 	//InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 500 }, VK_PAD_B, XINPUT_KEYSTROKE_KEYDOWN);
