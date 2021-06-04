@@ -52,5 +52,16 @@ int QBertComponent::GetLives()
 void QBertComponent::SetLocation(std::weak_ptr<GridNodeComponent> gridLocation)
 {
 	m_pGridLocation = gridLocation;
-	m_pGameObject.lock()->SetPosition(m_pGridLocation.lock()->GetWorldPosition().x, m_pGridLocation.lock()->GetWorldPosition().y);
+	m_pGameObject.lock()->SetPosition(m_pGridLocation.lock()->GetWorldPosition().x+8, m_pGridLocation.lock()->GetWorldPosition().y-8);
+	m_pGridLocation.lock()->ChangeState(1);
+}
+
+void QBertComponent::Move(Position pos)
+{
+	std::weak_ptr<GridNodeComponent> node = m_pGridLocation.lock()->GetConnection(pos);
+	if (!node.expired())
+	{
+		SetLocation(node);
+	}
+
 }

@@ -20,6 +20,7 @@
 #include "ServiceLocator.h"
 #include "SoundSystem.h"
 #include "GraphComponent.h"
+#include <time.h>
 
 using namespace std;
 using namespace std::chrono;
@@ -65,6 +66,8 @@ void dae::Minigin::Initialize()
 
 
 	ServiceLocator::RegisterSoundSystem(new SoundSystem());
+
+	srand(int(time(nullptr)));
 	
 }
 

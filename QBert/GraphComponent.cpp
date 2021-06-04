@@ -1,6 +1,8 @@
 #include "MiniginPCH.h"
 #include "GraphComponent.h"
 #include "GameObject.h"
+#include "RenderComponent.h"
+#include "ResourceManager.h"
 
 //GraphComponent::GraphComponent()
 //{
@@ -12,6 +14,7 @@
 
 GridNodeComponent::GridNodeComponent(std::weak_ptr<dae::GameObject> pGameObject)
 	:m_pGameObject{pGameObject}
+	,m_TextureName{"Block_"}
 {
 
 }
@@ -52,9 +55,9 @@ void GridNodeComponent::SetConnection(Position pos, std::weak_ptr<GridNodeCompon
 		break;
 	}
 
-	if (connection.lock()->GetConnection(Position(int(pos) + 2 % 4 )).expired())
+	if (connection.lock()->GetConnection(Position((int(pos) + 2) % 4 )).expired())
 	{
-		connection.lock()->SetConnection(Position(int(pos) + 2 % 4), m_pGameObject.lock()->getComponent<GridNodeComponent>());
+		connection.lock()->SetConnection(Position((int(pos) + 2) % 4), m_pGameObject.lock()->getComponent<GridNodeComponent>());
 	}
 
 }
@@ -84,4 +87,21 @@ std::weak_ptr<GridNodeComponent> GridNodeComponent::GetConnection(Position pos)
 glm::vec3 GridNodeComponent::GetWorldPosition()
 {
 	return m_pGameObject.lock()->GetTransform().GetPosition();
+}
+
+void GridNodeComponent::ChangeState(int stateChange)
+{
+	m_State += stateChange;
+	if (m_State > m_MaxState)
+	{
+		if (m_Cycle)
+		{
+			m_State = m_MaxState-1;
+		}
+		else
+		{
+			m_State = m_MaxState;
+		}
+	}
+	m_pGameObject.lock()->getComponent<RenderComponent>().lock()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture(m_TextureName + std::to_string(m_State)+".png"));
 }

@@ -19,6 +19,9 @@
 #include "../Minigin/GraphComponent.h"
 #include "QBertComponent.h"
 #include <SDL.h>
+#include "Command.h"
+#include "LevelConstructor.h"
+#include "CoilyComponent.h"
 
 using namespace dae;
 
@@ -103,53 +106,73 @@ void Game::LoadGame() const
 
 
 
-	std::shared_ptr<dae::GameObject> Node = std::make_shared<GameObject>();
-	render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(Node));
-	render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Block_1.png"));
-	Node->AddComponent(render);
-	Node->AddComponent(std::make_shared<GridNodeComponent>(Node));
-	Node->SetPosition(320, 100);
-	
 
-	std::shared_ptr<dae::GameObject> Node1 = std::make_shared<GameObject>();
-	render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(Node1));
-	render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Block_1.png"));
-	Node1->AddComponent(render);
-	Node1->AddComponent(std::make_shared<GridNodeComponent>(Node1));
-	Node1->SetPosition(336, 124);
-	
 
-	std::shared_ptr<dae::GameObject> Node2 = std::make_shared<GameObject>();
-	render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(Node2));
-	render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Block_1.png"));
-	Node2->AddComponent(render);
-	Node2->AddComponent(std::make_shared<GridNodeComponent>(Node2));
-	Node2->SetPosition(304, 124);
-	
+	std::shared_ptr<dae::GameObject> Coily = std::make_shared<GameObject>();
+	Coily->AddComponent(std::make_shared<CoilyComponent>(Coily));
+	render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(Coily));
+	render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Egg.png"));
+	Coily->AddComponent(render);
+
+
 
 	
+	//std::shared_ptr<dae::GameObject> Node = std::make_shared<GameObject>();
+	//render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(Node));
+	//render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Block_1.png"));
+	//Node->AddComponent(render);
+	//Node->AddComponent(std::make_shared<GridNodeComponent>(Node));
+	//Node->SetPosition(320, 100);
+	//
 
-	scene.Add(Node);
-	scene.Add(Node1);
-	scene.Add(Node2);
+	//std::shared_ptr<dae::GameObject> Node1 = std::make_shared<GameObject>();
+	//render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(Node1));
+	//render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Block_1.png"));
+	//Node1->AddComponent(render);
+	//Node1->AddComponent(std::make_shared<GridNodeComponent>(Node1));
+	//Node1->SetPosition(336, 124);
+	//
+
+	//std::shared_ptr<dae::GameObject> Node2 = std::make_shared<GameObject>();
+	//render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(Node2));
+	//render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Block_1.png"));
+	//Node2->AddComponent(render);
+	//Node2->AddComponent(std::make_shared<GridNodeComponent>(Node2));
+	//Node2->SetPosition(304, 124);
+	//
+
+	//
+
+	//scene.Add(Node);
+	//scene.Add(Node1);
+	//scene.Add(Node2);
+
+	LevelConstructor levelConstructor{};
+
+	auto node = levelConstructor.CreateLevel(scene, "../Data/Level1.txt");
 
 
-	qbertComponent->SetLocation(Node->getComponent<GridNodeComponent>());
-	
+	qbertComponent->SetLocation(node);
+	Coily->getComponent<CoilyComponent>().lock()->SetTarget(QBert);
+	Coily->getComponent<CoilyComponent>().lock()->SetLocation(node.lock()->GetConnection(Position::BottomRight));
+
 	scene.Add(QBert);
+	scene.Add(Coily);
 
 
-
-	InputManager::GetInstance().AddCommand(new PlayerDieCommand{ QBert->getComponent<PlayerComponent>() }, VK_PAD_LSHOULDER, XINPUT_KEYSTROKE_KEYDOWN);
-	InputManager::GetInstance().AddCommand(new PlayerDieCommand{ QBert2->getComponent<PlayerComponent>() }, VK_PAD_RSHOULDER, XINPUT_KEYSTROKE_KEYDOWN);
-	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 25 }, VK_PAD_A, XINPUT_KEYSTROKE_KEYDOWN);
-	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 500 }, VK_PAD_B, XINPUT_KEYSTROKE_KEYDOWN);
-	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 50 }, VK_PAD_X, XINPUT_KEYSTROKE_KEYDOWN);
-	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 300 }, VK_PAD_Y, XINPUT_KEYSTROKE_KEYDOWN);
-	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 25 }, VK_PAD_DPAD_DOWN, XINPUT_KEYSTROKE_KEYDOWN);
-	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 500 }, VK_PAD_DPAD_RIGHT, XINPUT_KEYSTROKE_KEYDOWN);
-	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 50 }, VK_PAD_DPAD_LEFT, XINPUT_KEYSTROKE_KEYDOWN);
-	InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 300 }, VK_PAD_DPAD_UP, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new MoveCommand{ QBert->getComponent<QBertComponent>(), Position::TopLeft }, VK_PAD_LTHUMB_UPLEFT, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new MoveCommand{ QBert->getComponent<QBertComponent>(), Position::TopRight }, VK_PAD_LTHUMB_UPRIGHT, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new MoveCommand{ QBert->getComponent<QBertComponent>(), Position::BottomLeft }, VK_PAD_LTHUMB_DOWNLEFT, XINPUT_KEYSTROKE_KEYDOWN);
+	InputManager::GetInstance().AddCommand(new MoveCommand{ QBert->getComponent<QBertComponent>(), Position::BottomRight }, VK_PAD_LTHUMB_DOWNRIGHT, XINPUT_KEYSTROKE_KEYDOWN);
+	//InputManager::GetInstance().AddCommand(new PlayerDieCommand{ QBert2->getComponent<PlayerComponent>() }, VK_PAD_RSHOULDER, XINPUT_KEYSTROKE_KEYDOWN);
+	//InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 25 }, VK_PAD_A, XINPUT_KEYSTROKE_KEYDOWN);
+	//InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 500 }, VK_PAD_B, XINPUT_KEYSTROKE_KEYDOWN);
+	//InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 50 }, VK_PAD_X, XINPUT_KEYSTROKE_KEYDOWN);
+	//InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert->getComponent<PlayerComponent>(), 300 }, VK_PAD_Y, XINPUT_KEYSTROKE_KEYDOWN);
+	//InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 25 }, VK_PAD_DPAD_DOWN, XINPUT_KEYSTROKE_KEYDOWN);
+	//InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 500 }, VK_PAD_DPAD_RIGHT, XINPUT_KEYSTROKE_KEYDOWN);
+	//InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 50 }, VK_PAD_DPAD_LEFT, XINPUT_KEYSTROKE_KEYDOWN);
+	//InputManager::GetInstance().AddCommand(new GainScoreCommand{ QBert2->getComponent<PlayerComponent>(), 300 }, VK_PAD_DPAD_UP, XINPUT_KEYSTROKE_KEYDOWN);
 
 	std::cout << "LShoulder: Kill player1\nRShoulder: Kill player2\nA: Player1 Gains 25 score\nB: Player1 Gains 500 score\nX: Player1 Gains 50 score\nY: Player2 Gains 300 score\nDpadDown: Player2 Gains 25 score\nDpadRight: Player2 Gains 500 score\nDpadLeft: Player2 Gains 50 score\nDpadUp: Player2 Gains 300 score\n";
 

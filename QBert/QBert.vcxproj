@@ -341,15 +341,19 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Minigin\GraphComponent.cpp" />
+    <ClCompile Include="CoilyComponent.cpp" />
+    <ClCompile Include="Command.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GraphComponent.cpp" />
     <ClCompile Include="LevelConstructor.cpp" />
     <ClCompile Include="QBert.cpp" />
     <ClCompile Include="QBertComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Minigin\GraphComponent.h" />
+    <ClInclude Include="CoilyComponent.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GraphComponent.h" />
     <ClInclude Include="LevelConstructor.h" />
     <ClInclude Include="QBertComponent.h" />
   </ItemGroup>

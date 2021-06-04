@@ -30,13 +30,21 @@ public:
 	void SetConnection(Position pos, std::weak_ptr<GridNodeComponent> connection);
 	std::weak_ptr<GridNodeComponent> GetConnection(Position pos);
 	glm::vec3 GetWorldPosition();
+	void ChangeState(int stateChange);
+
+	void SetMaxState(int maxState) { m_MaxState = maxState; }
+	void SetCycle(bool cycle) { m_Cycle = cycle; }
 
 private:
+	std::string m_TextureName;
 	std::weak_ptr<dae::GameObject> m_pGameObject;
 	std::weak_ptr<GridNodeComponent> m_pTopLeft{ std::shared_ptr<GridNodeComponent>(nullptr) };
 	std::weak_ptr<GridNodeComponent> m_pTopRight{ std::shared_ptr<GridNodeComponent>(nullptr) };
 	std::weak_ptr<GridNodeComponent> m_pBottomRight{ std::shared_ptr<GridNodeComponent>(nullptr) };
 	std::weak_ptr<GridNodeComponent> m_pBottomLeft{ std::shared_ptr<GridNodeComponent>(nullptr) };
+	int m_State{ 0 };
+	int m_MaxState{ 1 };
+	bool m_Cycle{ true };
 };
 
 

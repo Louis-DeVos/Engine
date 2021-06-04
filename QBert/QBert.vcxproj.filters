@@ -24,13 +24,19 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Minigin\GraphComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="QBertComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="LevelConstructor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CoilyComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,13 +44,19 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Minigin\GraphComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="QBertComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="LevelConstructor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilyComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

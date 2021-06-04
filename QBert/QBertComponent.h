@@ -30,6 +30,8 @@ public:
 
     void SetLocation(std::weak_ptr<GridNodeComponent> gridLocation);
 
+    void Move(Position pos);
+
 private:
     std::weak_ptr<dae::GameObject> m_pGameObject;
     int m_Lives;
