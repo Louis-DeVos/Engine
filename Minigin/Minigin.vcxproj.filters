@@ -84,17 +84,11 @@
     <ClInclude Include="Observer.h">
       <Filter>Observers</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerDeathObserver.h">
-      <Filter>Observers</Filter>
-    </ClInclude>
     <ClInclude Include="LifeComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="PlayerComponent.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreObserver.h">
-      <Filter>Observers</Filter>
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
       <Filter>Components</Filter>
@@ -194,17 +188,11 @@
     <ClCompile Include="Observer.cpp">
       <Filter>Observers</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerDeathObserver.cpp">
-      <Filter>Observers</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="LifeComponent.cpp">
       <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreObserver.cpp">
-      <Filter>Observers</Filter>
     </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
       <Filter>Components</Filter>

@@ -5,7 +5,11 @@
 
 dae::InputManager::~InputManager()
 {
-	for (auto command : m_Commands)
+	for (auto command : m_ControllerCommands)
+	{
+		delete command.pCommand;
+	}
+	for (auto command : m_KeyboardCommands)
 	{
 		delete command.pCommand;
 	}
@@ -22,10 +26,14 @@ bool dae::InputManager::ProcessInput()
 		if (e.type == SDL_QUIT) {
 			return false;
 		}
-		if (e.type == SDL_KEYDOWN) {
-		}
-		if (e.type == SDL_MOUSEBUTTONDOWN) {
-			
+		for (const auto& inputCommand : m_KeyboardCommands)
+		{
+			if (e.type == inputCommand.flag && e.key.keysym.sym == inputCommand.button)
+			{
+				//if(e.key.keysym.sym == SDL_Keycode)
+				inputCommand.pCommand->Execute();
+			}
+
 		}
 	}
 	
@@ -36,7 +44,7 @@ bool dae::InputManager::ProcessInput()
 
 	while (result == ERROR_SUCCESS)
 	{
-		for (auto inputCommand : m_Commands)
+		for (const auto& inputCommand : m_ControllerCommands)
 		{
 			if (inputCommand.button == m_Stroke->VirtualKey && m_Stroke->Flags == inputCommand.flag)
 			{
@@ -58,9 +66,14 @@ void dae::InputManager::Destroy()
 	//}
 }
 
-void dae::InputManager::AddCommand(Command* pCommand, unsigned button, unsigned flag)
+void dae::InputManager::AddControllerCommand(Command* pCommand, unsigned button, unsigned flag)
 {
-	m_Commands.push_back(InputCommand{ button, flag, pCommand });
+	m_ControllerCommands.push_back(ControllerCommand{ button, flag, pCommand });
+}
+
+void dae::InputManager::AddKeyboardCommand(Command* pCommand, int button, unsigned flag)
+{
+	m_KeyboardCommands.push_back(KeyboardCommand{ button, flag, pCommand });
 }
 
 //bool dae::InputManager::IsPressed(ControllerButton button) const

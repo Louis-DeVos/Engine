@@ -13,13 +13,10 @@
 #include "FPSComponent.h"
 #include "SubjectComponent.h"
 #include "PlayerComponent.h"
-#include "PlayerDeathObserver.h"
 #include "LifeComponent.h"
 #include "ScoreComponent.h"
-#include "ScoreObserver.h"
 #include "ServiceLocator.h"
 #include "SoundSystem.h"
-#include "GraphComponent.h"
 #include <time.h>
 
 using namespace std;

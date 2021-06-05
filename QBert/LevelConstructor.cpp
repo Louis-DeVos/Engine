@@ -14,7 +14,7 @@ LevelConstructor::~LevelConstructor()
 {
 }
 
-std::weak_ptr<GridNodeComponent> LevelConstructor::CreateLevel(dae::Scene& scene, std::string filePath) const
+std::weak_ptr<GridNodeComponent> LevelConstructor::CreateLevel(std::weak_ptr<dae::Scene> pScene, std::string filePath) const
 {
 	std::ifstream file{ filePath };
 
@@ -49,14 +49,14 @@ std::weak_ptr<GridNodeComponent> LevelConstructor::CreateLevel(dae::Scene& scene
 	}
 
 
-	std::shared_ptr<dae::GameObject> StartNode = std::make_shared<dae::GameObject>();
+	std::shared_ptr<dae::GameObject> StartNode = std::make_shared<dae::GameObject>(pScene);
 	auto render = std::make_shared<RenderComponent>(std::weak_ptr<dae::GameObject>(StartNode));
 	render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Block_0.png"));
 	StartNode->AddComponent(render);
 	auto startNodeComp = std::make_shared<GridNodeComponent>(StartNode);
 	StartNode->AddComponent(startNodeComp);
 	StartNode->SetPosition(float(m_StartX), float(m_StartY));
-	scene.Add(StartNode);
+	pScene.lock()->Add(StartNode);
 
 	startNodeComp->SetMaxState(maxState);
 	startNodeComp->SetCycle(cycle);
@@ -71,14 +71,14 @@ std::weak_ptr<GridNodeComponent> LevelConstructor::CreateLevel(dae::Scene& scene
 	{
 		for (size_t j = 0; j <= i; j++)
 		{
-			std::shared_ptr<dae::GameObject> Node = std::make_shared<dae::GameObject>();
+			std::shared_ptr<dae::GameObject> Node = std::make_shared<dae::GameObject>(pScene);
 			render = std::make_shared<RenderComponent>(std::weak_ptr<dae::GameObject>(Node));
 			render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Block_0.png"));
 			Node->AddComponent(render);
 			auto nodeComp = std::make_shared<GridNodeComponent>(Node);
 			Node->AddComponent(nodeComp);
 			Node->SetPosition(m_StartX -m_SizeX/2.f*i + m_SizeX*j, m_StartY + m_SizeY*0.75f*i);
-			scene.Add(Node);
+			pScene.lock()->Add(Node);
 
 			nodeComp->SetMaxState(maxState);
 			nodeComp->SetCycle(cycle);

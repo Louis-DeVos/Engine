@@ -32,6 +32,9 @@ public:
 
     void Move(Position pos);
 
+
+    std::weak_ptr<GridNodeComponent> GetGridLocation() { return m_pGridLocation; }
+
 private:
     std::weak_ptr<dae::GameObject> m_pGameObject;
     int m_Lives;

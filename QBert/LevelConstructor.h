@@ -16,7 +16,7 @@ public:
 	LevelConstructor();
 	~LevelConstructor();
 
-	std::weak_ptr<GridNodeComponent> CreateLevel(dae::Scene& scene, std::string filePath) const;
+	std::weak_ptr<GridNodeComponent> CreateLevel(std::weak_ptr<dae::Scene> pScene, std::string filePath) const;
 
 private:
 	const int m_StartX{320};

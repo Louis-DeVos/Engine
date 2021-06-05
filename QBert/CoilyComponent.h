@@ -7,6 +7,7 @@ namespace dae
 {
     class GameObject;
 }
+class QBertComponent;
 
 class CoilyComponent final :
     public BaseComponent
@@ -31,6 +32,8 @@ public:
     void SetTarget(std::weak_ptr<dae::GameObject> target) { m_pTarget = target; }
 
     void Move(Position pos);
+
+    bool CheckCollision(std::weak_ptr<QBertComponent> qbert);
 
 private:
     std::weak_ptr<dae::GameObject> m_pGameObject;

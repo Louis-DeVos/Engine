@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include <RenderComponent.h>
 #include <ResourceManager.h>
+#include "QBertComponent.h"
 
 GreenEnemyComponent::GreenEnemyComponent(std::weak_ptr<dae::GameObject> pGameObject)
 	:m_pGameObject(pGameObject)
@@ -37,6 +38,11 @@ void GreenEnemyComponent::Render(const glm::vec3&) const
 {
 }
 
+void GreenEnemyComponent::Die()
+{
+	m_pGameObject.lock()->SetToBeDestroyed();
+}
+
 void GreenEnemyComponent::SetLocation(std::weak_ptr<GridNodeComponent> gridLocation)
 {
 	m_pGridLocation = gridLocation;
@@ -52,5 +58,21 @@ void GreenEnemyComponent::Move(Position pos)
 		SetLocation(node);
 		node.lock()->ChangeState(-1);
 	}
+	else
+	{
+		Die();
+	}
 
+}
+
+bool GreenEnemyComponent::CheckCollision(std::weak_ptr<QBertComponent> qbert)
+{
+	if (!qbert.expired() && ! m_pGridLocation.expired())
+	{	
+		return (m_pGridLocation.lock() == qbert.lock()->GetGridLocation().lock());
+	}
+	else
+	{
+		return false;
+	}
 }

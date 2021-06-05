@@ -7,6 +7,7 @@
 namespace dae
 {
 	class Texture2D;
+	class Scene;
 	class GameObject final
 	{
 	public:
@@ -22,7 +23,9 @@ namespace dae
 		bool ToBeDestroyed();
 		void SetToBeDestroyed();
 
-		GameObject() = default;
+		std::weak_ptr<Scene> GetScene() { return m_pScene; }
+
+		GameObject(std::weak_ptr<Scene> pScene);
 		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -34,6 +37,7 @@ namespace dae
 
 	private:
 		Transform m_Transform;
+		std::weak_ptr<Scene> m_pScene{ std::shared_ptr<Scene>{nullptr} };
 		std::vector<std::shared_ptr<BaseComponent>> m_ComponentList;
 		bool m_ToBeDestroyed{ false };
 	};

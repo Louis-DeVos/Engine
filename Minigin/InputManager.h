@@ -5,17 +5,16 @@
 
 namespace dae
 {
-	enum class ControllerButton
-	{
-		ButtonA,
-		ButtonB,
-		ButtonX,
-		ButtonY
-	};
 
-	struct InputCommand
+	struct ControllerCommand
 	{
 		unsigned button;
+		unsigned flag;
+		Command* pCommand;
+	};
+	struct KeyboardCommand
+	{
+		int button;
 		unsigned flag;
 		Command* pCommand;
 	};
@@ -27,10 +26,13 @@ namespace dae
 		bool ProcessInput();
 		void Destroy();
 		/*bool IsPressed(unsigned button) const;*/
-		void AddCommand(Command* pCommand, unsigned button, unsigned flag);
+		void AddControllerCommand(Command* pCommand, unsigned button, unsigned flag);
+		void AddKeyboardCommand(Command* pCommand, int button, unsigned flag);
 	private:
-		using ControllerCommandsMap = std::vector<InputCommand>;
-		ControllerCommandsMap m_Commands{};
+		using ControllerCommandsMap = std::vector<ControllerCommand>;
+		ControllerCommandsMap m_ControllerCommands{};
+		using KeyboardCommandsMap = std::vector<KeyboardCommand>;
+		KeyboardCommandsMap m_KeyboardCommands{};
 		PXINPUT_KEYSTROKE m_Stroke{ new XINPUT_KEYSTROKE };
 		XINPUT_STATE m_CurrentState{};
 	};

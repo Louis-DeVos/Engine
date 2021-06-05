@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include <RenderComponent.h>
 #include <ResourceManager.h>
+#include "QBertComponent.h"
 
 CoilyComponent::CoilyComponent(std::weak_ptr<dae::GameObject> pGameObject)
 	:m_pGameObject(pGameObject)
@@ -17,7 +18,7 @@ void CoilyComponent::Update(float dt)
 	m_DelayTimer += dt;
 	if (m_DelayTimer >= m_MoveDelay)
 	{
-		if (m_Hatched)
+		if (m_Hatched && !m_pTarget.expired())
 		{
 			glm::vec3 pos = m_pGameObject.lock()->GetTransform().GetPosition();
 			glm::vec3 targetPos = m_pTarget.lock()->GetTransform().GetPosition();
@@ -90,4 +91,16 @@ void CoilyComponent::Move(Position pos)
 		m_Hatched = true;
 		m_pGameObject.lock()->getComponent<RenderComponent>().lock()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Coily.png"));
 	}	
+}
+
+bool CoilyComponent::CheckCollision(std::weak_ptr<QBertComponent> qbert)
+{
+	if (!qbert.expired() && !m_pGridLocation.expired())
+	{
+		return (m_pGridLocation.lock() == qbert.lock()->GetGridLocation().lock());
+	}
+	else
+	{
+		return false;
+	}
 }

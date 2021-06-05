@@ -7,6 +7,7 @@ namespace dae
 {
     class GameObject;
 }
+class QBertComponent;
 
 class PurpleEnemyComponent final :
     public BaseComponent
@@ -32,6 +33,7 @@ public:
 
     void Move(Position pos);
     void MoveSideways();
+    bool CheckCollision(std::weak_ptr<QBertComponent> qbert);
 
 private:
     std::weak_ptr<dae::GameObject> m_pGameObject;

@@ -4,6 +4,11 @@
 #include "Renderer.h"
 #include <memory>
 
+dae::GameObject::GameObject(std::weak_ptr<Scene> pScene)
+	:m_pScene{pScene}
+{
+}
+
 dae::GameObject::~GameObject()
 {
 

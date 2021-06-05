@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include <RenderComponent.h>
 #include <ResourceManager.h>
+#include "QBertComponent.h"
 
 PurpleEnemyComponent::PurpleEnemyComponent(std::weak_ptr<dae::GameObject> pGameObject, int movementDirection)
 	:m_pGameObject(pGameObject)
@@ -45,6 +46,11 @@ void PurpleEnemyComponent::Render(const glm::vec3&) const
 {
 }
 
+void PurpleEnemyComponent::Die()
+{
+	m_pGameObject.lock()->SetToBeDestroyed();
+}
+
 void PurpleEnemyComponent::SetLocation(std::weak_ptr<GridNodeComponent> gridLocation)
 {
 	m_pGridLocation = gridLocation;
@@ -59,6 +65,10 @@ void PurpleEnemyComponent::Move(Position pos)
 	{
 		SetLocation(node);
 	}
+	else
+	{
+		Die();
+	}
 
 }
 
@@ -71,13 +81,14 @@ void PurpleEnemyComponent::MoveSideways()
 		node = m_pGridLocation.lock()->GetConnection(Position::TopRight);
 		if (!node.expired())
 		{
-			 node = node.lock()->GetConnection(Position::BottomRight);
+			node = node.lock()->GetConnection(Position::BottomRight);
 		}
 		else
 		{
+			Die();
 			return;
 		}
-			 
+
 	}
 	else
 	{
@@ -88,6 +99,7 @@ void PurpleEnemyComponent::MoveSideways()
 		}
 		else
 		{
+			Die();
 			return;
 		}
 	}
@@ -97,5 +109,24 @@ void PurpleEnemyComponent::MoveSideways()
 	{
 		SetLocation(node);
 	}
+	else
+	{
+		Die();
+	}
+}
 
+bool PurpleEnemyComponent::CheckCollision(std::weak_ptr<QBertComponent> qbert)
+{
+	if (!qbert.expired() && !m_pGameObject.expired())
+	{
+		if (m_MovementDirection > 0 && !m_pGridLocation.expired() && !m_pGridLocation.lock()->GetConnection(Position::BottomLeft).expired())
+		{
+			return(m_pGridLocation.lock()->GetConnection(Position::BottomLeft).lock() == qbert.lock()->GetGridLocation().lock());
+		}
+		else if (m_MovementDirection < 0 && !m_pGridLocation.lock()->GetConnection(Position::BottomRight).expired())
+		{
+			return(m_pGridLocation.lock()->GetConnection(Position::BottomRight).lock() == qbert.lock()->GetGridLocation().lock());
+		}
+	}
+	return false;
 }

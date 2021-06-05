@@ -1,5 +1,5 @@
 #pragma once
-#include "Observer.h"
+#include "../Minigin/Observer.h"
 #include "LifeComponent.h"
 
 class PlayerDeathObserver final: public Observer

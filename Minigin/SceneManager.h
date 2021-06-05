@@ -1,6 +1,7 @@
 #pragma once
 #include "Singleton.h"
 #include <vector>
+#include <memory>
 
 namespace dae
 {
@@ -8,7 +9,7 @@ namespace dae
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
-		Scene& CreateScene(const std::string& name);
+		std::weak_ptr<Scene> CreateScene(const std::string& name);
 
 		void Update(float dt);
 		void FixedUpdate(float dt);

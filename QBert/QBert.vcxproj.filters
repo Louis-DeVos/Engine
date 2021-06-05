@@ -16,6 +16,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{e167dfa3-334b-4a6c-b61a-db4ce409759b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Observers">
+      <UniqueIdentifier>{766225cb-7255-4fd3-b7d2-3327c93eb146}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QBert.cpp">
@@ -48,6 +51,12 @@
     <ClCompile Include="PurpleEnemyComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerDeathObserver.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreObserver.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -76,6 +85,12 @@
     </ClInclude>
     <ClInclude Include="PurpleEnemyComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDeathObserver.h">
+      <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreObserver.h">
+      <Filter>Observers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

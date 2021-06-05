@@ -348,9 +348,11 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="GraphComponent.cpp" />
     <ClCompile Include="GreenEnemyComponent.cpp" />
     <ClCompile Include="LevelConstructor.cpp" />
+    <ClCompile Include="PlayerDeathObserver.cpp" />
     <ClCompile Include="PurpleEnemyComponent.cpp" />
     <ClCompile Include="QBert.cpp" />
     <ClCompile Include="QBertComponent.cpp" />
+    <ClCompile Include="ScoreObserver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoilyComponent.h" />
@@ -360,8 +362,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="GraphComponent.h" />
     <ClInclude Include="GreenEnemyComponent.h" />
     <ClInclude Include="LevelConstructor.h" />
+    <ClInclude Include="PlayerDeathObserver.h" />
     <ClInclude Include="PurpleEnemyComponent.h" />
     <ClInclude Include="QBertComponent.h" />
+    <ClInclude Include="ScoreObserver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
