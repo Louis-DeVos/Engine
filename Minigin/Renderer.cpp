@@ -36,29 +36,20 @@ void dae::Renderer::Init(SDL_Window * window)
 	ImGui_ImplOpenGL2_Init();
 }
 
-void dae::Renderer::Render()
+void dae::Renderer::Render() const
 {
 	SDL_RenderClear(m_Renderer);
 
-	SceneManager::GetInstance().Render();
 	
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(m_Window);
 	ImGui::NewFrame();
-	if (m_ShowDemo)
-	{
-		ImGui::ShowDemoWindow(&m_ShowDemo);
-	}
-	else
-	{
-		bool show = true;
-		ImGui::Begin("window", &show);
-		ImGui::Button("single player", { 100,30 });
-		ImGui::Button("co-op", { 100,30 });
-		ImGui::Button("versus", { 100,30 });
-		ImGui::SetWindowSize("window", { 120,150 });
-		ImGui::End();
-	}
+
+	SceneManager::GetInstance().Render();
+	
+
+
+
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 

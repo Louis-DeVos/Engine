@@ -9,59 +9,56 @@ CoilyComponent::CoilyComponent(std::weak_ptr<dae::GameObject> pGameObject)
 {
 }
 
-CoilyComponent::~CoilyComponent()
-{
-}
 
 void CoilyComponent::Update(float dt)
 {
 	m_DelayTimer += dt;
-	if (m_DelayTimer >= m_MoveDelay)
+
+
+	if (m_Hatched && !m_pTarget.expired() && !m_ControlledByPlayer)
 	{
-		if (m_Hatched && !m_pTarget.expired())
+		glm::vec3 pos = m_pGameObject.lock()->GetTransform().GetPosition();
+		glm::vec3 targetPos = m_pTarget.lock()->GetTransform().GetPosition();
+
+
+		if (pos.x > targetPos.x)
 		{
-			glm::vec3 pos = m_pGameObject.lock()->GetTransform().GetPosition();
-			glm::vec3 targetPos = m_pTarget.lock()->GetTransform().GetPosition();
-
-
-			if (pos.x > targetPos.x)
+			if (pos.y < targetPos.y)
 			{
-				if (pos.y < targetPos.y)
-				{
-					Move(Position::BottomLeft);
-				}
-				else
-				{
-					Move(Position::TopLeft);
-				}
+				Move(Direction::BottomLeft);
 			}
 			else
 			{
-				if (pos.y < targetPos.y)
-				{
-					Move(Position::BottomRight);
-				}
-				else
-				{
-					Move(Position::TopRight);
-				}
+				Move(Direction::TopLeft);
 			}
-
-
 		}
 		else
 		{
-			if (rand() % 2 == 0)
+			if (pos.y < targetPos.y)
 			{
-				Move(Position::BottomLeft);
+				Move(Direction::BottomRight);
 			}
 			else
 			{
-				Move(Position::BottomRight);
+				Move(Direction::TopRight);
 			}
 		}
-		m_DelayTimer = 0;
+
+
 	}
+	else if (!m_Hatched)
+	{
+		if (rand() % 2 == 0)
+		{
+			EggMove(Direction::BottomLeft);
+		}
+		else
+		{
+			EggMove(Direction::BottomRight);
+		}
+	}
+	
+	
 }
 
 void CoilyComponent::FixedUpdate(float )
@@ -72,28 +69,56 @@ void CoilyComponent::Render(const glm::vec3& ) const
 {
 }
 
+void CoilyComponent::Die() const
+{
+	m_pGameObject.lock()->SetToBeDestroyed();
+}
+
 void CoilyComponent::SetLocation(std::weak_ptr<GridNodeComponent> gridLocation)
 {
 	m_pGridLocation = gridLocation;
 	m_pGameObject.lock()->SetPosition(m_pGridLocation.lock()->GetWorldPosition().x + 8, m_pGridLocation.lock()->GetWorldPosition().y - 8);
 }
 
-void CoilyComponent::Move(Position pos)
+void CoilyComponent::Move(Direction pos)
 {
-	std::weak_ptr<GridNodeComponent> node = m_pGridLocation.lock()->GetConnection(pos);
-	
-	if (!node.expired())
+	if (m_DelayTimer >= m_MoveDelay)
 	{
-		SetLocation(node);
+		if (m_Hatched)
+		{
+			std::weak_ptr<GridNodeComponent> node = m_pGridLocation.lock()->GetConnection(pos);
+			if (!node.expired())
+			{
+				SetLocation(node);
+			}
+			else
+			{
+				Die();
+			}
+		}
+		m_DelayTimer = 0;
 	}
-	else if (!m_Hatched)
-	{
-		m_Hatched = true;
-		m_pGameObject.lock()->getComponent<RenderComponent>().lock()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Coily.png"));
-	}	
 }
 
-bool CoilyComponent::CheckCollision(std::weak_ptr<QBertComponent> qbert)
+void CoilyComponent::EggMove(Direction pos)
+{
+	if (m_DelayTimer >= m_MoveDelay)
+	{
+		std::weak_ptr<GridNodeComponent> node = m_pGridLocation.lock()->GetConnection(pos);
+		if (!node.expired())
+		{
+			SetLocation(node);
+		}
+		else if (!m_Hatched)
+		{
+			m_Hatched = true;
+			m_pGameObject.lock()->getComponent<RenderComponent>().lock()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Coily.png"));
+		}
+		m_DelayTimer = 0;
+	}
+}
+
+bool CoilyComponent::CheckCollision(std::weak_ptr<QBertComponent> qbert) const
 {
 	if (!qbert.expired() && !m_pGridLocation.expired())
 	{

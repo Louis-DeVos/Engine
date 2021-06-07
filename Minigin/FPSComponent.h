@@ -11,11 +11,12 @@ class FPSComponent final :
 {
 public:
     FPSComponent(std::weak_ptr<dae::GameObject> pGameObject);
-    ~FPSComponent();
+    ~FPSComponent() override;
 
-    void Update(float dt);
-    void FixedUpdate(float dt);
-    void Render(const glm::vec3& transform) const;
+    void Update(float dt) override;
+    void FixedUpdate(float dt) override;
+    void Render(const glm::vec3& transform) const override;
+    std::weak_ptr<dae::GameObject> GetOwner() const override { return m_pGameObject; }
 
     FPSComponent(const FPSComponent& other) = delete;
     FPSComponent(FPSComponent&& other) = delete;
@@ -24,6 +25,7 @@ public:
 
 private:
     std::weak_ptr<dae::GameObject> m_pGameObject;
+    std::weak_ptr<dae::TextComponent> m_pTextComponent;
     int m_FPS;
 };
 

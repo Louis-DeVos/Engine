@@ -6,6 +6,7 @@ namespace dae
 	class Minigin
 	{
 	public:
+		virtual ~Minigin() = default;
 		virtual void Initialize();
 		virtual void LoadGame() const;
 		virtual void Cleanup();

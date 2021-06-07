@@ -18,10 +18,15 @@ void LifeComponent::Update(float)
 {
 	if (m_NeedsUpdate)
 	{
-		std::weak_ptr<dae::TextComponent> pTextComponent = m_pGameObject.lock()->getComponent<dae::TextComponent>();
-		if (!pTextComponent.expired())
+		if (m_pTextComponent.expired())
 		{
-			pTextComponent.lock()->SetText(std::to_string(m_Lives) + " lives");
+			m_pTextComponent = m_pGameObject.lock()->getComponent<dae::TextComponent>();
+		}
+
+
+		if (!m_pTextComponent.expired())
+		{
+			m_pTextComponent.lock()->SetText(std::to_string(m_Lives) + " lives");
 			m_NeedsUpdate = false;
 		}
 	}

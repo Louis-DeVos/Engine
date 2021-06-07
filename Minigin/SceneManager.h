@@ -15,7 +15,7 @@ namespace dae
 		void FixedUpdate(float dt);
 		void Render();
 		void DestroyObjects();
-		~SceneManager();
+		~SceneManager() override;
 
 	private:
 		friend class Singleton<SceneManager>;

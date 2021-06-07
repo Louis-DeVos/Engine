@@ -22,9 +22,10 @@ namespace dae
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
-		~InputManager();
+		~InputManager() override;
 		bool ProcessInput();
 		void Destroy();
+		void Clear();
 		/*bool IsPressed(unsigned button) const;*/
 		void AddControllerCommand(Command* pCommand, unsigned button, unsigned flag);
 		void AddKeyboardCommand(Command* pCommand, int button, unsigned flag);

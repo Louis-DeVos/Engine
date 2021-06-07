@@ -66,6 +66,23 @@ void dae::InputManager::Destroy()
 	//}
 }
 
+void dae::InputManager::Clear()
+{
+	for (auto command : m_KeyboardCommands)
+	{
+		delete command.pCommand;
+	}
+	for (auto command : m_ControllerCommands)
+	{
+		delete command.pCommand;
+	}
+
+	m_KeyboardCommands.clear();
+	m_ControllerCommands.clear();
+}
+
+
+
 void dae::InputManager::AddControllerCommand(Command* pCommand, unsigned button, unsigned flag)
 {
 	m_ControllerCommands.push_back(ControllerCommand{ button, flag, pCommand });

@@ -21,10 +21,16 @@ void FPSComponent::Update(float dt)
 	if (newFps != m_FPS)
 	{
 		m_FPS = newFps;
-		auto pTextComponent = m_pGameObject.lock()->getComponent<dae::TextComponent>();
-		if (!pTextComponent.expired())
+			
+		
+		if (m_pTextComponent.expired())
 		{
-			pTextComponent.lock()->SetText(std::to_string(m_FPS) + " FPS");
+			m_pTextComponent = m_pGameObject.lock()->getComponent<dae::TextComponent>();
+		}
+
+		if (!m_pTextComponent.expired())
+		{
+			m_pTextComponent.lock()->SetText(std::to_string(m_FPS) + " FPS");
 		}
 	}
 }

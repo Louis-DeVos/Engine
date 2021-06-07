@@ -9,8 +9,7 @@ SubjectComponent::SubjectComponent(std::weak_ptr<dae::GameObject> pGameObject)
 }
 
 SubjectComponent::~SubjectComponent()
-{
-}
+= default;
 
 void SubjectComponent::Update(float)
 {
@@ -51,8 +50,4 @@ void SubjectComponent::Notify(Event event, const std::string& str) const
 void SubjectComponent::AddObserver(std::shared_ptr<Observer> observer)
 {
 	m_ObserverVector.push_back(observer);
-}
-
-void SubjectComponent::RemoveObserver(std::shared_ptr<Observer>)
-{
 }

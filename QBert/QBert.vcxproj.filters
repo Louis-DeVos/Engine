@@ -42,7 +42,7 @@
     <ClCompile Include="CoilyComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="GraphComponent.cpp">
+    <ClCompile Include="GridNodeComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="GreenEnemyComponent.cpp">
@@ -56,6 +56,12 @@
     </ClCompile>
     <ClCompile Include="ScoreObserver.cpp">
       <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="DiskComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,7 +83,7 @@
     <ClInclude Include="GameManagerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="GraphComponent.h">
+    <ClInclude Include="GridNodeComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="GreenEnemyComponent.h">
@@ -91,6 +97,12 @@
     </ClInclude>
     <ClInclude Include="ScoreObserver.h">
       <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="DiskComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,11 +20,11 @@ void GreenEnemyComponent::Update(float dt)
 	{
 		if (rand() % 2 == 0)
 		{
-			Move(Position::BottomLeft);
+			Move(Direction::BottomLeft);
 		}
 		else
 		{
-			Move(Position::BottomRight);
+			Move(Direction::BottomRight);
 		}
 		m_DelayTimer = 0;
 	}
@@ -38,7 +38,7 @@ void GreenEnemyComponent::Render(const glm::vec3&) const
 {
 }
 
-void GreenEnemyComponent::Die()
+void GreenEnemyComponent::Die() const
 {
 	m_pGameObject.lock()->SetToBeDestroyed();
 }
@@ -49,7 +49,7 @@ void GreenEnemyComponent::SetLocation(std::weak_ptr<GridNodeComponent> gridLocat
 	m_pGameObject.lock()->SetPosition(m_pGridLocation.lock()->GetWorldPosition().x + 8, m_pGridLocation.lock()->GetWorldPosition().y - 8);
 }
 
-void GreenEnemyComponent::Move(Position pos)
+void GreenEnemyComponent::Move(Direction pos)
 {
 	std::weak_ptr<GridNodeComponent> node = m_pGridLocation.lock()->GetConnection(pos);
 
@@ -65,7 +65,7 @@ void GreenEnemyComponent::Move(Position pos)
 
 }
 
-bool GreenEnemyComponent::CheckCollision(std::weak_ptr<QBertComponent> qbert)
+bool GreenEnemyComponent::CheckCollision(std::weak_ptr<QBertComponent> qbert) const
 {
 	if (!qbert.expired() && ! m_pGridLocation.expired())
 	{	

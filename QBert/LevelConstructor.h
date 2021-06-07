@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "GraphComponent.h"
+#include "GridNodeComponent.h"
 
 namespace dae
 {
@@ -10,13 +10,13 @@ namespace dae
 }
 
 
-class LevelConstructor
+class LevelConstructor final
 {
 public:
 	LevelConstructor();
 	~LevelConstructor();
 
-	std::weak_ptr<GridNodeComponent> CreateLevel(std::weak_ptr<dae::Scene> pScene, std::string filePath) const;
+	std::pair<std::vector< std::weak_ptr<GridNodeComponent>>, std::vector< std::weak_ptr<DiskComponent>>> CreateLevel(std::weak_ptr<dae::Scene> pScene, std::string filePath) const;
 
 private:
 	const int m_StartX{320};

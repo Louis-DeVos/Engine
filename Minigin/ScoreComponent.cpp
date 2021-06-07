@@ -20,12 +20,18 @@ void ScoreComponent::Update(float)
 {
 	if (m_NeedsUpdate)
 	{
-		std::weak_ptr<dae::TextComponent> pTextComponent = m_pGameObject.lock()->getComponent<dae::TextComponent>();
-		if (!pTextComponent.expired())
+		if (m_pTextComponent.expired())
 		{
-			pTextComponent.lock()->SetText("Score " + std::to_string(m_Score));
+			m_pTextComponent = m_pGameObject.lock()->getComponent<dae::TextComponent>();
+		}
+
+
+		if (!m_pTextComponent.expired())
+		{
+			m_pTextComponent.lock()->SetText("Score " + std::to_string(m_Score));
 			m_NeedsUpdate = false;
 		}
+
 	}
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <BaseComponent.h>
 #include <memory>
-#include "GraphComponent.h"
+#include "GridNodeComponent.h"
 
 namespace dae
 {
@@ -14,13 +14,14 @@ class PurpleEnemyComponent final :
 {
 public:
     PurpleEnemyComponent(std::weak_ptr<dae::GameObject> pGameObject, int movementDirection);
-    ~PurpleEnemyComponent();
+    ~PurpleEnemyComponent() override;
 
-    void Update(float dt);
-    void FixedUpdate(float dt);
-    void Render(const glm::vec3& transform) const;
+    void Update(float dt) override;
+    void FixedUpdate(float dt) override;
+    void Render(const glm::vec3& transform) const override;
+    std::weak_ptr<dae::GameObject> GetOwner() const override { return m_pGameObject; }
 
-    void Die();
+    void Die() const;
 
     PurpleEnemyComponent(const PurpleEnemyComponent& other) = delete;
     PurpleEnemyComponent(PurpleEnemyComponent&& other) = delete;
@@ -31,16 +32,16 @@ public:
 
     void SetTarget(std::weak_ptr<dae::GameObject> target) { m_pTarget = target; }
 
-    void Move(Position pos);
+    void Move(Direction pos);
     void MoveSideways();
-    bool CheckCollision(std::weak_ptr<QBertComponent> qbert);
+    bool CheckCollision(std::weak_ptr<QBertComponent> qbert) const;
 
 private:
     std::weak_ptr<dae::GameObject> m_pGameObject;
     std::weak_ptr<dae::GameObject> m_pTarget{ std::shared_ptr<dae::GameObject>(nullptr) };
     std::weak_ptr<GridNodeComponent> m_pGridLocation{ std::shared_ptr<GridNodeComponent>(nullptr) };
     float m_DelayTimer{ 0.f };
-    const float m_MoveDelay{ 0.5f };
+    const float m_MoveDelay{ 1.f };
     int m_MovementDirection{ 0 };
 };
 

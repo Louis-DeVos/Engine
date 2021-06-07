@@ -11,8 +11,7 @@ PurpleEnemyComponent::PurpleEnemyComponent(std::weak_ptr<dae::GameObject> pGameO
 }
 
 PurpleEnemyComponent::~PurpleEnemyComponent()
-{
-}
+= default;
 
 void PurpleEnemyComponent::Update(float dt)
 {
@@ -23,11 +22,11 @@ void PurpleEnemyComponent::Update(float dt)
 		{
 			if (m_MovementDirection > 0)
 			{
-				Move(Position::TopRight);
+				Move(Direction::TopRight);
 			}
 			else
 			{
-				Move(Position::TopLeft);
+				Move(Direction::TopLeft);
 			}
 		}
 		else
@@ -46,7 +45,7 @@ void PurpleEnemyComponent::Render(const glm::vec3&) const
 {
 }
 
-void PurpleEnemyComponent::Die()
+void PurpleEnemyComponent::Die() const
 {
 	m_pGameObject.lock()->SetToBeDestroyed();
 }
@@ -57,7 +56,7 @@ void PurpleEnemyComponent::SetLocation(std::weak_ptr<GridNodeComponent> gridLoca
 	m_pGameObject.lock()->SetPosition(m_pGridLocation.lock()->GetWorldPosition().x + 12 - 12*m_MovementDirection, m_pGridLocation.lock()->GetWorldPosition().y + 16);
 }
 
-void PurpleEnemyComponent::Move(Position pos)
+void PurpleEnemyComponent::Move(Direction pos)
 {
 	std::weak_ptr<GridNodeComponent> node = m_pGridLocation.lock()->GetConnection(pos);
 
@@ -78,10 +77,10 @@ void PurpleEnemyComponent::MoveSideways()
 
 	if (m_MovementDirection > 0)
 	{
-		node = m_pGridLocation.lock()->GetConnection(Position::TopRight);
+		node = m_pGridLocation.lock()->GetConnection(Direction::TopRight);
 		if (!node.expired())
 		{
-			node = node.lock()->GetConnection(Position::BottomRight);
+			node = node.lock()->GetConnection(Direction::BottomRight);
 		}
 		else
 		{
@@ -92,10 +91,10 @@ void PurpleEnemyComponent::MoveSideways()
 	}
 	else
 	{
-		node = m_pGridLocation.lock()->GetConnection(Position::TopLeft);
+		node = m_pGridLocation.lock()->GetConnection(Direction::TopLeft);
 		if (!node.expired())
 		{
-			node = node.lock()->GetConnection(Position::BottomLeft);
+			node = node.lock()->GetConnection(Direction::BottomLeft);
 		}
 		else
 		{
@@ -115,17 +114,17 @@ void PurpleEnemyComponent::MoveSideways()
 	}
 }
 
-bool PurpleEnemyComponent::CheckCollision(std::weak_ptr<QBertComponent> qbert)
+bool PurpleEnemyComponent::CheckCollision(std::weak_ptr<QBertComponent> qbert) const
 {
 	if (!qbert.expired() && !m_pGameObject.expired())
 	{
-		if (m_MovementDirection > 0 && !m_pGridLocation.expired() && !m_pGridLocation.lock()->GetConnection(Position::BottomLeft).expired())
+		if (m_MovementDirection > 0 && !m_pGridLocation.expired() && !m_pGridLocation.lock()->GetConnection(Direction::BottomLeft).expired())
 		{
-			return(m_pGridLocation.lock()->GetConnection(Position::BottomLeft).lock() == qbert.lock()->GetGridLocation().lock());
+			return(m_pGridLocation.lock()->GetConnection(Direction::BottomLeft).lock() == qbert.lock()->GetGridLocation().lock());
 		}
-		else if (m_MovementDirection < 0 && !m_pGridLocation.lock()->GetConnection(Position::BottomRight).expired())
+		else if (m_MovementDirection < 0 && !m_pGridLocation.lock()->GetConnection(Direction::BottomRight).expired())
 		{
-			return(m_pGridLocation.lock()->GetConnection(Position::BottomRight).lock() == qbert.lock()->GetGridLocation().lock());
+			return(m_pGridLocation.lock()->GetConnection(Direction::BottomRight).lock() == qbert.lock()->GetGridLocation().lock());
 		}
 	}
 	return false;

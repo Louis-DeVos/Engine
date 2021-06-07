@@ -1,0 +1,3 @@
+Layers = 7
+Cycle = true
+NeededJumps = 1

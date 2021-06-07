@@ -33,8 +33,13 @@ void dae::TextComponent::Update(float)
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
 		}
 
-		auto pRenderComponent = m_pGameObject.lock()->getComponent<RenderComponent>();
-		if (!pRenderComponent.expired())
+
+		if (m_pRenderComponent.expired())
+		{
+			m_pRenderComponent = m_pGameObject.lock()->getComponent<RenderComponent>();
+		}
+
+		if (!m_pRenderComponent.expired())
 		{
 			std::shared_ptr<dae::Texture2D> pTexture = std::make_shared<dae::Texture2D>(SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf));
 			if (pTexture == nullptr)
@@ -42,7 +47,7 @@ void dae::TextComponent::Update(float)
 				throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 			}
 			SDL_FreeSurface(surf);
-			pRenderComponent.lock()->SetTexture(pTexture);
+			m_pRenderComponent.lock()->SetTexture(pTexture);
 			m_NeedsUpdate = false;
 		}
 	}

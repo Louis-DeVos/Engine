@@ -12,15 +12,16 @@ class PlayerComponent final :
 {
 public:
     PlayerComponent(std::weak_ptr<dae::GameObject> pGameObject);
-    ~PlayerComponent();
+    ~PlayerComponent() override;
 
-    void Update(float dt);
-    void FixedUpdate(float dt);
-    void Render(const glm::vec3& transform) const;
+    void Update(float dt) override;
+    void FixedUpdate(float dt) override;
+    void Render(const glm::vec3& transform) const override;
 
-    void GainScore(int score);
+    void GainScore(int score) const;
     void Die();
-    int GetLives();
+    int GetLives() const;
+    std::weak_ptr<dae::GameObject> GetOwner() const override { return m_pGameObject; }
 
     PlayerComponent(const PlayerComponent& other) = delete;
     PlayerComponent(PlayerComponent&& other) = delete;

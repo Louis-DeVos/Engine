@@ -23,7 +23,7 @@ class SoundSystem final:
 {
 public:
 	SoundSystem();
-	~SoundSystem();
+	~SoundSystem() override;
 	SoundSystem(const SoundSystem&) = delete;
 	SoundSystem(SoundSystem&&) = delete;
 	SoundSystem& operator=(const SoundSystem&) = delete;
@@ -31,10 +31,11 @@ public:
 
 
 
-	void Play(unsigned int id, bool music);
-	void AddEffect(std::string filePath, unsigned int id);
-	void AddMusic(std::string filePath, unsigned int id);
-	void Update();
+	void Play(unsigned int id, bool music) override;
+	void AddEffect(std::string filePath, unsigned int id) override;
+	void AddMusic(std::string filePath, unsigned int id) override;
+	void Update() override;
+
 
 
 private:

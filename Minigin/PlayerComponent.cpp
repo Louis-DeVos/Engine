@@ -11,8 +11,7 @@ PlayerComponent::PlayerComponent(std::weak_ptr<dae::GameObject> pGameObject)
 }
 
 PlayerComponent::~PlayerComponent()
-{
-}
+= default;
 
 void PlayerComponent::Update(float)
 {
@@ -26,7 +25,7 @@ void PlayerComponent::Render(const glm::vec3&) const
 {
 }
 
-void PlayerComponent::GainScore(int score)
+void PlayerComponent::GainScore(int score) const
 {
 	m_pGameObject.lock()->getComponent<SubjectComponent>().lock()->Notify(Event::ChangeScoreEvent,score);
 }
@@ -44,7 +43,7 @@ void PlayerComponent::Die()
 	}
 }
 
-int PlayerComponent::GetLives()
+int PlayerComponent::GetLives() const
 {
 	return m_Lives;
 }

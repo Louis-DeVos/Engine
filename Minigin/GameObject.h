@@ -17,13 +17,13 @@ namespace dae
 
 		//void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
-		const Transform& GetTransform() { return m_Transform; }
+		const Transform& GetTransform() const { return m_Transform; }
 		void AddComponent(std::shared_ptr<BaseComponent> pComponent) { m_ComponentList.push_back(pComponent); }
 
-		bool ToBeDestroyed();
+		bool ToBeDestroyed() const;
 		void SetToBeDestroyed();
 
-		std::weak_ptr<Scene> GetScene() { return m_pScene; }
+		std::weak_ptr<Scene> GetScene() const { return m_pScene; }
 
 		GameObject(std::weak_ptr<Scene> pScene);
 		~GameObject();

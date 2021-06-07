@@ -22,15 +22,17 @@ namespace dae
 		void Render(const glm::vec3& transform) const override;
 
 		void SetText(const std::string& text);
+		std::weak_ptr<dae::GameObject> GetOwner() const override { return m_pGameObject; }
 
 		explicit TextComponent(const std::string& text, std::shared_ptr<Font> font, std::weak_ptr<dae::GameObject> pGameObject);
-		virtual ~TextComponent();
+		~TextComponent() override;
 		TextComponent(const TextComponent& other) = delete;
 		TextComponent(TextComponent&& other) = delete;
 		TextComponent& operator=(const TextComponent& other) = delete;
 		TextComponent& operator=(TextComponent&& other) = delete;
 	private:
 		std::weak_ptr<dae::GameObject> m_pGameObject;
+		std::weak_ptr<RenderComponent> m_pRenderComponent;
 		std::string m_Text;
 		std::shared_ptr<Font> m_Font;
 		bool m_NeedsUpdate;

@@ -4,7 +4,7 @@ class Game :
     public dae::Minigin
 {
 public:
-    void LoadGame() const;
-    void Cleanup();
+    void LoadGame() const override;
+    void Cleanup() override;
 };
 

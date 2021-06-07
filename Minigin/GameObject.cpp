@@ -33,7 +33,7 @@ void dae::GameObject::FixedUpdate(float dt)
 void dae::GameObject::Render() const
 {
 	const auto pos = m_Transform.GetPosition();
-	for (std::shared_ptr<BaseComponent> component : m_ComponentList)
+	for (const std::shared_ptr<BaseComponent>& component : m_ComponentList)
 	{
 		component->Render(pos);
 	}
@@ -50,7 +50,7 @@ void dae::GameObject::SetPosition(float x, float y)
 	m_Transform.SetPosition(x, y, 0.0f);
 }
 
-bool dae::GameObject::ToBeDestroyed()
+bool dae::GameObject::ToBeDestroyed() const
 {
 	return m_ToBeDestroyed;
 }

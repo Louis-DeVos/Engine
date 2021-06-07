@@ -343,11 +343,13 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
   <ItemGroup>
     <ClCompile Include="CoilyComponent.cpp" />
     <ClCompile Include="Command.cpp" />
+    <ClCompile Include="DiskComponent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManagerComponent.cpp" />
-    <ClCompile Include="GraphComponent.cpp" />
+    <ClCompile Include="GridNodeComponent.cpp" />
     <ClCompile Include="GreenEnemyComponent.cpp" />
     <ClCompile Include="LevelConstructor.cpp" />
+    <ClCompile Include="MenuComponent.cpp" />
     <ClCompile Include="PlayerDeathObserver.cpp" />
     <ClCompile Include="PurpleEnemyComponent.cpp" />
     <ClCompile Include="QBert.cpp" />
@@ -357,11 +359,13 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
   <ItemGroup>
     <ClInclude Include="CoilyComponent.h" />
     <ClInclude Include="Command.h" />
+    <ClInclude Include="DiskComponent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManagerComponent.h" />
-    <ClInclude Include="GraphComponent.h" />
+    <ClInclude Include="GridNodeComponent.h" />
     <ClInclude Include="GreenEnemyComponent.h" />
     <ClInclude Include="LevelConstructor.h" />
+    <ClInclude Include="MenuComponent.h" />
     <ClInclude Include="PlayerDeathObserver.h" />
     <ClInclude Include="PurpleEnemyComponent.h" />
     <ClInclude Include="QBertComponent.h" />

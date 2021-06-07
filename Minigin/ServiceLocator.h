@@ -8,7 +8,7 @@ class NullSoundSystem final : public SoundSystemInterface
 {
 public:
 	NullSoundSystem() {};
-	~NullSoundSystem() {};
+	~NullSoundSystem() override {};
 	NullSoundSystem(const NullSoundSystem&) = delete;
 	NullSoundSystem(NullSoundSystem&&) = delete;
 	NullSoundSystem& operator=(const NullSoundSystem&) = delete;
@@ -16,11 +16,11 @@ public:
 
 
 
-	void Play(unsigned int, bool) {};
-	void AddEffect(std::string, unsigned int ) {};
-	void AddMusic(std::string, unsigned int ) {};
+	void Play(unsigned int, bool) override {};
+	void AddEffect(std::string, unsigned int ) override {};
+	void AddMusic(std::string, unsigned int ) override {};
 
-	void Update() {};
+	void Update() override {};
 
 private:
 

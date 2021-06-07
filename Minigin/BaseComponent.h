@@ -2,6 +2,12 @@
 #include "MiniginPCH.h"
 #include "Transform.h"
 
+
+namespace dae
+{
+	class GameObject;
+}
+
 class BaseComponent
 {
 
@@ -12,6 +18,6 @@ public:
 	virtual void Update(float dt)=0;
 	virtual void FixedUpdate(float dt)=0;
 	virtual void Render(const glm::vec3& transform) const =0;
-
+	virtual std::weak_ptr<dae::GameObject> GetOwner() const =0;
 };
 

@@ -5,16 +5,15 @@
 #include "../Minigin/Scene.h"
 #include <fstream>
 #include <regex>
+#include "DiskComponent.h"
 
 LevelConstructor::LevelConstructor()
-{
-}
+= default;
 
 LevelConstructor::~LevelConstructor()
-{
-}
+= default;
 
-std::weak_ptr<GridNodeComponent> LevelConstructor::CreateLevel(std::weak_ptr<dae::Scene> pScene, std::string filePath) const
+std::pair<std::vector< std::weak_ptr<GridNodeComponent>>, std::vector< std::weak_ptr<DiskComponent>>> LevelConstructor::CreateLevel(std::weak_ptr<dae::Scene> pScene, std::string filePath) const
 {
 	std::ifstream file{ filePath };
 
@@ -65,7 +64,28 @@ std::weak_ptr<GridNodeComponent> LevelConstructor::CreateLevel(std::weak_ptr<dae
 
 	std::vector< std::weak_ptr<GridNodeComponent>> lastLayer{};
 	std::vector< std::weak_ptr<GridNodeComponent>> currentLayer{};
+	std::vector< std::weak_ptr<GridNodeComponent>> nodes{};
 	lastLayer.push_back(StartNode->getComponent<GridNodeComponent>());
+	nodes.push_back(StartNode->getComponent<GridNodeComponent>());
+
+
+
+
+	//std::shared_ptr<dae::GameObject> disk = std::make_shared<dae::GameObject>(pScene);
+	//render = std::make_shared<RenderComponent>(std::weak_ptr<dae::GameObject>(disk));
+	//render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Disk.png"));
+	//disk->AddComponent(render);
+	//auto diskComp = std::make_shared<DiskComponent>(disk);
+	//disk->AddComponent(diskComp);
+	//disk->SetPosition(m_StartX - m_SizeX / 2.f , m_StartY - m_SizeY * 0.75f );
+	//pScene.lock()->Add(disk);
+
+	//startNodeComp->SetLeftDisk(diskComp);
+
+
+	std::vector< std::weak_ptr<DiskComponent>> disks{};
+	//disks.push_back(diskComp);
+
 
 	for (size_t i = 1; i < layers; i++)
 	{
@@ -86,13 +106,14 @@ std::weak_ptr<GridNodeComponent> LevelConstructor::CreateLevel(std::weak_ptr<dae
 
 			if (j>0)
 			{
-				Node->getComponent<GridNodeComponent>().lock()->SetConnection(Position::TopLeft, lastLayer[j - 1]);
+				Node->getComponent<GridNodeComponent>().lock()->SetConnection(Direction::TopLeft, lastLayer[j - 1]);
 			}
 			if (j<lastLayer.size())
 			{
-				Node->getComponent<GridNodeComponent>().lock()->SetConnection(Position::TopRight, lastLayer[j]);
+				Node->getComponent<GridNodeComponent>().lock()->SetConnection(Direction::TopRight, lastLayer[j]);
 			}
 			currentLayer.push_back(Node->getComponent<GridNodeComponent>());
+			nodes.push_back(Node->getComponent<GridNodeComponent>());
 		}
 
 		lastLayer = currentLayer;
@@ -100,31 +121,6 @@ std::weak_ptr<GridNodeComponent> LevelConstructor::CreateLevel(std::weak_ptr<dae
 
 	}
 
-	//std::shared_ptr<dae::GameObject> Node1 = std::make_shared<dae::GameObject>();
-	//render = std::make_shared<RenderComponent>(std::weak_ptr<dae::GameObject>(Node1));
-	//render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Block_1.png"));
-	//Node1->AddComponent(render);
-	//Node1->AddComponent(std::make_shared<GridNodeComponent>(Node1));
-	//Node1->SetPosition(304, 124);
 
-
-	//std::shared_ptr<dae::GameObject> Node2 = std::make_shared<dae::GameObject>();
-	//render = std::make_shared<RenderComponent>(std::weak_ptr<dae::GameObject>(Node2));
-	//render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Block_1.png"));
-	//Node2->AddComponent(render);
-	//Node2->AddComponent(std::make_shared<GridNodeComponent>(Node2));
-	//Node2->SetPosition(336, 124);
-
-
-
-	//Node1->getComponent<GridNodeComponent>().lock()->SetConnection(Position::TopRight, StartNode->getComponent<GridNodeComponent>());
-	//Node2->getComponent<GridNodeComponent>().lock()->SetConnection(Position::TopLeft, StartNode->getComponent<GridNodeComponent>());
-
-
-	//scene.Add(Node1);
-	//scene.Add(Node2);
-
-
-
-	return StartNode->getComponent<GridNodeComponent>();
+	return std::make_pair(nodes,disks);
 }
