@@ -87,7 +87,7 @@ std::pair<std::vector< std::weak_ptr<GridNodeComponent>>, std::vector< std::weak
 	//disks.push_back(diskComp);
 
 
-	for (size_t i = 1; i < layers; i++)
+	for (size_t i = 1; i < size_t(layers); i++)
 	{
 		for (size_t j = 0; j <= i; j++)
 		{
