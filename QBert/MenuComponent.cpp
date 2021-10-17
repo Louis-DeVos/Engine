@@ -4,7 +4,7 @@
 #include "../3rdParty/imgui-1.81/imgui.h" 
 #include "GameManagerComponent.h" 
 
-MenuComponent::MenuComponent(std::weak_ptr<dae::GameObject> pGameObject, std::weak_ptr<GameManagerComponent> pManager)
+MenuComponent::MenuComponent(std::weak_ptr<GameObject> pGameObject, std::weak_ptr<GameManagerComponent> pManager)
 	:m_pGameObject{pGameObject}
 	,m_pGameManager{pManager}
 {

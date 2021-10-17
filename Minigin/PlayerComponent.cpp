@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include "ServiceLocator.h"
 
-PlayerComponent::PlayerComponent(std::weak_ptr<dae::GameObject> pGameObject)
+PlayerComponent::PlayerComponent(std::weak_ptr<GameObject> pGameObject)
 	:m_pGameObject(pGameObject)
 	, m_Lives{3}
 {

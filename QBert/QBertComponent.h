@@ -3,10 +3,7 @@
 #include <memory>
 #include "GridNodeComponent.h"
 
-namespace dae
-{
-    class GameObject;
-}
+class GameObject;
 
 class DiskComponent;
 
@@ -14,13 +11,13 @@ class QBertComponent final :
     public BaseComponent
 {
 public:
-    QBertComponent(std::weak_ptr<dae::GameObject> pGameObject);
+    QBertComponent(std::weak_ptr<GameObject> pGameObject);
     ~QBertComponent() override;
 
     void Update(float dt) override;
     void FixedUpdate(float dt) override;
     void Render(const glm::vec3& transform) const override;
-    std::weak_ptr<dae::GameObject> GetOwner() const override { return m_pGameObject; }
+    std::weak_ptr<GameObject> GetOwner() const override { return m_pGameObject; }
 
     void GainScore(int score) const;
     void Die();
@@ -43,7 +40,7 @@ public:
     std::weak_ptr<GridNodeComponent> GetGridLocation() const { return m_pGridLocation; }
 
 private:
-    std::weak_ptr<dae::GameObject> m_pGameObject;
+    std::weak_ptr<GameObject> m_pGameObject;
     int m_Lives;
     std::weak_ptr<GridNodeComponent> m_pGridLocation;
     std::weak_ptr<GridNodeComponent> m_pStartLocation;

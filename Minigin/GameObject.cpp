@@ -4,17 +4,17 @@
 #include "Renderer.h"
 #include <memory>
 
-dae::GameObject::GameObject(std::weak_ptr<Scene> pScene)
+GameObject::GameObject(std::weak_ptr<Scene> pScene)
 	:m_pScene{pScene}
 {
 }
 
-dae::GameObject::~GameObject()
+GameObject::~GameObject()
 {
 
 }
 
-void dae::GameObject::Update(float dt)
+void GameObject::Update(float dt)
 {
 	for (std::shared_ptr<BaseComponent> component: m_ComponentList)
 	{
@@ -22,7 +22,7 @@ void dae::GameObject::Update(float dt)
 	}
 }
 
-void dae::GameObject::FixedUpdate(float dt)
+void GameObject::FixedUpdate(float dt)
 {
 	for (std::shared_ptr<BaseComponent> component : m_ComponentList)
 	{
@@ -30,7 +30,7 @@ void dae::GameObject::FixedUpdate(float dt)
 	}
 }
 
-void dae::GameObject::Render() const
+void GameObject::Render() const
 {
 	const auto pos = m_Transform.GetPosition();
 	for (const std::shared_ptr<BaseComponent>& component : m_ComponentList)
@@ -40,22 +40,22 @@ void dae::GameObject::Render() const
 	//Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
 }
 
-//void dae::GameObject::SetTexture(const std::string& filename)
+//void GameObject::SetTexture(const std::string& filename)
 //{
-//	m_Texture = dae::ResourceManager::GetInstance().LoadTexture(filename);
+//	m_Texture = ResourceManager::GetInstance().LoadTexture(filename);
 //}
 
-void dae::GameObject::SetPosition(float x, float y)
+void GameObject::SetPosition(float x, float y)
 {
 	m_Transform.SetPosition(x, y, 0.0f);
 }
 
-bool dae::GameObject::ToBeDestroyed() const
+bool GameObject::ToBeDestroyed() const
 {
 	return m_ToBeDestroyed;
 }
 
-void dae::GameObject::SetToBeDestroyed()
+void GameObject::SetToBeDestroyed()
 {
 	m_ToBeDestroyed = true;
 }

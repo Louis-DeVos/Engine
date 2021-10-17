@@ -11,18 +11,18 @@
 #include <string>
 #include <stdexcept>
 
-dae::TextComponent::TextComponent(const std::string& text, std::shared_ptr<Font> font, std::weak_ptr<dae::GameObject> pGameObject)
+TextComponent::TextComponent(const std::string& text, std::shared_ptr<Font> font, std::weak_ptr<GameObject> pGameObject)
 	: m_NeedsUpdate(true), m_Text(text), m_Font(font)
 	, m_pGameObject{pGameObject}
 {
 
 }
 
-dae::TextComponent::~TextComponent()
+TextComponent::~TextComponent()
 {
 }
 
-void dae::TextComponent::Update(float)
+void TextComponent::Update(float)
 {
 	if (m_NeedsUpdate)
 	{
@@ -41,7 +41,7 @@ void dae::TextComponent::Update(float)
 
 		if (!m_pRenderComponent.expired())
 		{
-			std::shared_ptr<dae::Texture2D> pTexture = std::make_shared<dae::Texture2D>(SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf));
+			std::shared_ptr<Texture2D> pTexture = std::make_shared<Texture2D>(SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf));
 			if (pTexture == nullptr)
 			{
 				throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
@@ -53,17 +53,17 @@ void dae::TextComponent::Update(float)
 	}
 }
 
-void dae::TextComponent::FixedUpdate(float)
+void TextComponent::FixedUpdate(float)
 {
 
 }
 
-void dae::TextComponent::Render(const glm::vec3& ) const
+void TextComponent::Render(const glm::vec3& ) const
 {
 }
 
 // This implementation uses the "dirty flag" pattern
-void dae::TextComponent::SetText(const std::string& text)
+void TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;
 	m_NeedsUpdate = true;

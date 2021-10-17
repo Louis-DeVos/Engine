@@ -24,7 +24,6 @@
 #include "PurpleEnemyComponent.h"
 #include "GameManagerComponent.h"
 
-using namespace dae;
 
 void Game::LoadGame() const
 {

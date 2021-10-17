@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include <memory>
 
-RenderComponent::RenderComponent(std::weak_ptr<dae::GameObject> pGameObject)
+RenderComponent::RenderComponent(std::weak_ptr<GameObject> pGameObject)
 	:m_pTexture{nullptr}
 	, m_pGameObject{ pGameObject }
 {
@@ -25,10 +25,10 @@ void RenderComponent::FixedUpdate(float)
 
 void RenderComponent::Render(const glm::vec3& transform)const
 {
-	dae::Renderer::GetInstance().RenderTexture(*m_pTexture, transform.x, transform.y);
+	Renderer::GetInstance().RenderTexture(*m_pTexture, transform.x, transform.y);
 }
 
-void RenderComponent::SetTexture(std::shared_ptr<dae::Texture2D> pTexture)
+void RenderComponent::SetTexture(std::shared_ptr<Texture2D> pTexture)
 {
 	m_pTexture = pTexture;
 }

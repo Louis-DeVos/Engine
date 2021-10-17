@@ -65,17 +65,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="QBertComponent.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelConstructor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CoilyComponent.h">
       <Filter>Components</Filter>
@@ -103,6 +94,15 @@
     </ClInclude>
     <ClInclude Include="MenuComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelConstructor.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

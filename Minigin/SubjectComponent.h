@@ -3,16 +3,15 @@
 #include "Observer.h"
 #include <vector>
 
-namespace dae
-{
-    class GameObject;
-}
+
+class GameObject;
+
 
 class SubjectComponent final :
     public BaseComponent
 {
 public:
-    SubjectComponent(std::weak_ptr<dae::GameObject> pGameObject);
+    SubjectComponent(std::weak_ptr<GameObject> pGameObject);
     ~SubjectComponent() override;
 
     void Update(float dt) override;
@@ -22,7 +21,7 @@ public:
     void Notify(Event event, int num) const;
     void Notify(Event event, const std::string& str) const;
     void AddObserver(std::shared_ptr<Observer> observer);
-    std::weak_ptr<dae::GameObject> GetOwner() const override { return m_pGameObject; }
+    std::weak_ptr<GameObject> GetOwner() const override { return m_pGameObject; }
 
     SubjectComponent(const SubjectComponent& other) = delete;
     SubjectComponent(SubjectComponent&& other) = delete;
@@ -30,7 +29,7 @@ public:
     SubjectComponent& operator=(SubjectComponent&& other) = delete;
 
 private:
-    std::weak_ptr<dae::GameObject> m_pGameObject;
+    std::weak_ptr<GameObject> m_pGameObject;
     std::vector<std::shared_ptr<Observer>> m_ObserverVector;
 
 };

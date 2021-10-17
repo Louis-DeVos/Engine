@@ -4,7 +4,7 @@
 #include <ResourceManager.h>
 #include "QBertComponent.h"
 
-PurpleEnemyComponent::PurpleEnemyComponent(std::weak_ptr<dae::GameObject> pGameObject, int movementDirection)
+PurpleEnemyComponent::PurpleEnemyComponent(std::weak_ptr<GameObject> pGameObject, int movementDirection)
 	:m_pGameObject(pGameObject)
 	,m_MovementDirection{movementDirection}
 {

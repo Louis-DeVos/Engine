@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QBert", "QBert\QBert.vcxpro
 		{41B0EC47-D48C-4B0F-951B-D98595FFAE0A} = {41B0EC47-D48C-4B0F-951B-D98595FFAE0A}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EngineTest", "EngineTest\EngineTest.vcxproj", "{262EC08B-E09C-4F54-8368-EA6AADAF1608}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -34,6 +36,14 @@ Global
 		{E1B04AA0-9D04-42EA-9E6E-C1854E96D862}.Release|x64.Build.0 = Release|x64
 		{E1B04AA0-9D04-42EA-9E6E-C1854E96D862}.Release|x86.ActiveCfg = Release|Win32
 		{E1B04AA0-9D04-42EA-9E6E-C1854E96D862}.Release|x86.Build.0 = Release|Win32
+		{262EC08B-E09C-4F54-8368-EA6AADAF1608}.Debug|x64.ActiveCfg = Debug|x64
+		{262EC08B-E09C-4F54-8368-EA6AADAF1608}.Debug|x64.Build.0 = Debug|x64
+		{262EC08B-E09C-4F54-8368-EA6AADAF1608}.Debug|x86.ActiveCfg = Debug|Win32
+		{262EC08B-E09C-4F54-8368-EA6AADAF1608}.Debug|x86.Build.0 = Debug|Win32
+		{262EC08B-E09C-4F54-8368-EA6AADAF1608}.Release|x64.ActiveCfg = Release|x64
+		{262EC08B-E09C-4F54-8368-EA6AADAF1608}.Release|x64.Build.0 = Release|x64
+		{262EC08B-E09C-4F54-8368-EA6AADAF1608}.Release|x86.ActiveCfg = Release|Win32
+		{262EC08B-E09C-4F54-8368-EA6AADAF1608}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

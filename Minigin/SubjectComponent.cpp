@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-SubjectComponent::SubjectComponent(std::weak_ptr<dae::GameObject> pGameObject)
+SubjectComponent::SubjectComponent(std::weak_ptr<GameObject> pGameObject)
 	:m_pGameObject(pGameObject)
 {
 }

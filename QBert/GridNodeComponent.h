@@ -1,10 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 
-namespace dae
-{
-	class GameObject;
-}
+class GameObject;
 class DiskComponent;
 
 
@@ -21,13 +18,13 @@ class GridNodeComponent final:
 	public BaseComponent
 {
 public:
-	GridNodeComponent(std::weak_ptr<dae::GameObject> pGameObject);
+	GridNodeComponent(std::weak_ptr<GameObject> pGameObject);
 	~GridNodeComponent() override;
 
 	void Update(float dt) override;
 	void FixedUpdate(float dt) override;
 	void Render(const glm::vec3& transform) const override;
-	std::weak_ptr<dae::GameObject> GetOwner() const override { return m_pGameObject; }
+	std::weak_ptr<GameObject> GetOwner() const override { return m_pGameObject; }
 
 	void SetConnection(Direction pos, std::weak_ptr<GridNodeComponent> connection);
 	std::weak_ptr<GridNodeComponent> GetConnection(Direction pos) const;
@@ -54,7 +51,7 @@ public:
 
 private:
 	std::string m_TextureName;
-	std::weak_ptr<dae::GameObject> m_pGameObject;
+	std::weak_ptr<GameObject> m_pGameObject;
 	std::weak_ptr<GridNodeComponent> m_pTopLeft{ std::shared_ptr<GridNodeComponent>(nullptr) };
 	std::weak_ptr<GridNodeComponent> m_pTopRight{ std::shared_ptr<GridNodeComponent>(nullptr) };
 	std::weak_ptr<GridNodeComponent> m_pBottomRight{ std::shared_ptr<GridNodeComponent>(nullptr) };

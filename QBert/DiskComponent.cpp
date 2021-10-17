@@ -2,7 +2,7 @@
 #include "DiskComponent.h"
 #include "GameObject.h"
 
-DiskComponent::DiskComponent(std::weak_ptr<dae::GameObject> pGameObject)
+DiskComponent::DiskComponent(std::weak_ptr<GameObject> pGameObject)
 	:m_pGameObject{pGameObject}
 {
 

@@ -22,7 +22,7 @@
 using namespace std;
 using namespace std::chrono;
 
-void dae::Minigin::Initialize()
+void Minigin::Initialize()
 {
 	_putenv("SDL_AUDIODRIVER=DirectSound");
 
@@ -71,12 +71,12 @@ void dae::Minigin::Initialize()
 /**
  * Code constructing the scene world starts here
  */
-void dae::Minigin::LoadGame() const
+void Minigin::LoadGame() const
 {
 	
 }
 
-void dae::Minigin::Cleanup()
+void Minigin::Cleanup()
 {
 	delete ServiceLocator::GetSoundSystem();
 
@@ -86,7 +86,7 @@ void dae::Minigin::Cleanup()
 	SDL_Quit();
 }
 
-void dae::Minigin::Run()
+void Minigin::Run()
 {
 	Initialize();
 

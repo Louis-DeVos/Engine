@@ -6,7 +6,7 @@
 #include <mutex>
 #include <string>
 
-ScoreComponent::ScoreComponent(std::weak_ptr<dae::GameObject> pGameObject)
+ScoreComponent::ScoreComponent(std::weak_ptr<GameObject> pGameObject)
 	:m_pGameObject{pGameObject}
 	, m_Score{0}
 {
@@ -22,7 +22,7 @@ void ScoreComponent::Update(float)
 	{
 		if (m_pTextComponent.expired())
 		{
-			m_pTextComponent = m_pGameObject.lock()->getComponent<dae::TextComponent>();
+			m_pTextComponent = m_pGameObject.lock()->getComponent<TextComponent>();
 		}
 
 

@@ -3,10 +3,7 @@
 #include <memory>
 #include "GridnodeComponent.h"
 
-namespace dae
-{
-    class GameObject;
-}
+class GameObject;
 class QBertComponent;
 class CoilyComponent;
 class PurpleEnemyComponent;
@@ -20,7 +17,7 @@ class GameManagerComponent final :
     public BaseComponent
 {
 public:
-    GameManagerComponent(std::weak_ptr<dae::GameObject> pGameObject);
+    GameManagerComponent(std::weak_ptr<GameObject> pGameObject);
     ~GameManagerComponent() override = default;
 
     void Update(float dt) override;
@@ -38,7 +35,7 @@ public:
     void StartSinglePlayer();
     void StartCoop();
     void StartVersus();
-    std::weak_ptr<dae::GameObject> GetOwner() const override { return m_pGameObject; }
+    std::weak_ptr<GameObject> GetOwner() const override { return m_pGameObject; }
 
     void LoadLevel();
 
@@ -50,7 +47,7 @@ public:
 
 
 private:
-    std::weak_ptr<dae::GameObject> m_pGameObject;
+    std::weak_ptr<GameObject> m_pGameObject;
     std::weak_ptr<QBertComponent> m_pPlayer{ std::shared_ptr<QBertComponent>(nullptr) };
     std::weak_ptr<QBertComponent> m_pPlayer2{ std::shared_ptr<QBertComponent>(nullptr) };
     std::weak_ptr<CoilyComponent> m_pCoily{ std::shared_ptr<CoilyComponent>(nullptr) };

@@ -12,7 +12,7 @@
 //{
 //}
 
-GridNodeComponent::GridNodeComponent(std::weak_ptr<dae::GameObject> pGameObject)
+GridNodeComponent::GridNodeComponent(std::weak_ptr<GameObject> pGameObject)
 	:m_pGameObject{pGameObject}
 	,m_TextureName{"Block_"}
 {
@@ -136,7 +136,7 @@ bool GridNodeComponent::ChangeState(int stateChange)
 	{
 		m_State = 0;
 	}
-	m_pGameObject.lock()->getComponent<RenderComponent>().lock()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture(m_TextureName + std::to_string(m_State)+".png"));
+	m_pGameObject.lock()->getComponent<RenderComponent>().lock()->SetTexture(ResourceManager::GetInstance().LoadTexture(m_TextureName + std::to_string(m_State)+".png"));
 	return stateWentUp;
 }
 

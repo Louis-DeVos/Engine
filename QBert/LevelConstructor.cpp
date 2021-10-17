@@ -13,7 +13,7 @@ LevelConstructor::LevelConstructor()
 LevelConstructor::~LevelConstructor()
 = default;
 
-std::pair<std::vector< std::weak_ptr<GridNodeComponent>>, std::vector< std::weak_ptr<DiskComponent>>> LevelConstructor::CreateLevel(std::weak_ptr<dae::Scene> pScene, std::string filePath) const
+std::pair<std::vector< std::weak_ptr<GridNodeComponent>>, std::vector< std::weak_ptr<DiskComponent>>> LevelConstructor::CreateLevel(std::weak_ptr<Scene> pScene, std::string filePath) const
 {
 	std::ifstream file{ filePath };
 
@@ -48,9 +48,9 @@ std::pair<std::vector< std::weak_ptr<GridNodeComponent>>, std::vector< std::weak
 	}
 
 
-	std::shared_ptr<dae::GameObject> StartNode = std::make_shared<dae::GameObject>(pScene);
-	auto render = std::make_shared<RenderComponent>(std::weak_ptr<dae::GameObject>(StartNode));
-	render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Block_0.png"));
+	std::shared_ptr<GameObject> StartNode = std::make_shared<GameObject>(pScene);
+	auto render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(StartNode));
+	render->SetTexture(ResourceManager::GetInstance().LoadTexture("Block_0.png"));
 	StartNode->AddComponent(render);
 	auto startNodeComp = std::make_shared<GridNodeComponent>(StartNode);
 	StartNode->AddComponent(startNodeComp);
@@ -71,9 +71,9 @@ std::pair<std::vector< std::weak_ptr<GridNodeComponent>>, std::vector< std::weak
 
 
 
-	//std::shared_ptr<dae::GameObject> disk = std::make_shared<dae::GameObject>(pScene);
-	//render = std::make_shared<RenderComponent>(std::weak_ptr<dae::GameObject>(disk));
-	//render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Disk.png"));
+	//std::shared_ptr<GameObject> disk = std::make_shared<GameObject>(pScene);
+	//render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(disk));
+	//render->SetTexture(ResourceManager::GetInstance().LoadTexture("Disk.png"));
 	//disk->AddComponent(render);
 	//auto diskComp = std::make_shared<DiskComponent>(disk);
 	//disk->AddComponent(diskComp);
@@ -91,9 +91,9 @@ std::pair<std::vector< std::weak_ptr<GridNodeComponent>>, std::vector< std::weak
 	{
 		for (size_t j = 0; j <= i; j++)
 		{
-			std::shared_ptr<dae::GameObject> Node = std::make_shared<dae::GameObject>(pScene);
-			render = std::make_shared<RenderComponent>(std::weak_ptr<dae::GameObject>(Node));
-			render->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Block_0.png"));
+			std::shared_ptr<GameObject> Node = std::make_shared<GameObject>(pScene);
+			render = std::make_shared<RenderComponent>(std::weak_ptr<GameObject>(Node));
+			render->SetTexture(ResourceManager::GetInstance().LoadTexture("Block_0.png"));
 			Node->AddComponent(render);
 			auto nodeComp = std::make_shared<GridNodeComponent>(Node);
 			Node->AddComponent(nodeComp);

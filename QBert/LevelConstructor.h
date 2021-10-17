@@ -3,12 +3,10 @@
 #include <memory>
 #include "GridNodeComponent.h"
 
-namespace dae
-{
-	class GameObject;
-	class Scene;
-}
 
+
+class GameObject;
+class Scene;
 
 class LevelConstructor final
 {
@@ -16,7 +14,7 @@ public:
 	LevelConstructor();
 	~LevelConstructor();
 
-	std::pair<std::vector< std::weak_ptr<GridNodeComponent>>, std::vector< std::weak_ptr<DiskComponent>>> CreateLevel(std::weak_ptr<dae::Scene> pScene, std::string filePath) const;
+	std::pair<std::vector< std::weak_ptr<GridNodeComponent>>, std::vector< std::weak_ptr<DiskComponent>>> CreateLevel(std::weak_ptr<Scene> pScene, std::string filePath) const;
 
 private:
 	const int m_StartX{320};

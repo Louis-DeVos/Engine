@@ -2,16 +2,14 @@
 #include "BaseComponent.h"
 #include <memory>
 
-namespace dae
-{
-    class GameObject;
-}
+
+class GameObject;
 
 class PlayerComponent final :
     public BaseComponent
 {
 public:
-    PlayerComponent(std::weak_ptr<dae::GameObject> pGameObject);
+    PlayerComponent(std::weak_ptr<GameObject> pGameObject);
     ~PlayerComponent() override;
 
     void Update(float dt) override;
@@ -21,7 +19,7 @@ public:
     void GainScore(int score) const;
     void Die();
     int GetLives() const;
-    std::weak_ptr<dae::GameObject> GetOwner() const override { return m_pGameObject; }
+    std::weak_ptr<GameObject> GetOwner() const override { return m_pGameObject; }
 
     PlayerComponent(const PlayerComponent& other) = delete;
     PlayerComponent(PlayerComponent&& other) = delete;
@@ -29,7 +27,7 @@ public:
     PlayerComponent& operator=(PlayerComponent&& other) = delete;
 
 private:
-    std::weak_ptr<dae::GameObject> m_pGameObject;
+    std::weak_ptr<GameObject> m_pGameObject;
     int m_Lives;
 };
 

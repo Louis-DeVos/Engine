@@ -4,7 +4,7 @@
 #include <ResourceManager.h>
 #include "QBertComponent.h"
 
-GreenEnemyComponent::GreenEnemyComponent(std::weak_ptr<dae::GameObject> pGameObject)
+GreenEnemyComponent::GreenEnemyComponent(std::weak_ptr<GameObject> pGameObject)
 	:m_pGameObject(pGameObject)
 {
 }

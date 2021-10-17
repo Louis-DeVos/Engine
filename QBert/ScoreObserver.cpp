@@ -9,11 +9,11 @@ ScoreObserver::ScoreObserver(std::weak_ptr<ScoreComponent> target)
 {
 }
 
-void ScoreObserver::OnNotify(std::weak_ptr<dae::GameObject>, Event )
+void ScoreObserver::OnNotify(std::weak_ptr<GameObject>, Event )
 {
 }
 
-void ScoreObserver::OnNotify(std::weak_ptr<dae::GameObject> pGameObject, Event event, int num)
+void ScoreObserver::OnNotify(std::weak_ptr<GameObject> pGameObject, Event event, int num)
 {
 	switch (event)
 	{
@@ -26,6 +26,6 @@ void ScoreObserver::OnNotify(std::weak_ptr<dae::GameObject> pGameObject, Event e
 	}
 }
 
-void ScoreObserver::OnNotify(std::weak_ptr<dae::GameObject>, Event , const std::string& )
+void ScoreObserver::OnNotify(std::weak_ptr<GameObject>, Event , const std::string& )
 {
 }

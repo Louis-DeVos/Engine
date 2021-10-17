@@ -4,7 +4,7 @@
 #include <ResourceManager.h>
 #include "QBertComponent.h"
 
-CoilyComponent::CoilyComponent(std::weak_ptr<dae::GameObject> pGameObject)
+CoilyComponent::CoilyComponent(std::weak_ptr<GameObject> pGameObject)
 	:m_pGameObject(pGameObject)
 {
 }
@@ -112,7 +112,7 @@ void CoilyComponent::EggMove(Direction pos)
 		else if (!m_Hatched)
 		{
 			m_Hatched = true;
-			m_pGameObject.lock()->getComponent<RenderComponent>().lock()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Coily.png"));
+			m_pGameObject.lock()->getComponent<RenderComponent>().lock()->SetTexture(ResourceManager::GetInstance().LoadTexture("Coily.png"));
 		}
 		m_DelayTimer = 0;
 	}

@@ -11,7 +11,7 @@ PlayerDeathObserver::PlayerDeathObserver(std::weak_ptr<LifeComponent> target)
 	
 }
 
-void PlayerDeathObserver::OnNotify(std::weak_ptr<dae::GameObject> pGameObject, Event event)
+void PlayerDeathObserver::OnNotify(std::weak_ptr<GameObject> pGameObject, Event event)
 {
 	switch (event)
 	{
@@ -24,10 +24,10 @@ void PlayerDeathObserver::OnNotify(std::weak_ptr<dae::GameObject> pGameObject, E
 	}
 }
 
-void PlayerDeathObserver::OnNotify(std::weak_ptr<dae::GameObject> , Event , int )
+void PlayerDeathObserver::OnNotify(std::weak_ptr<GameObject> , Event , int )
 {
 }
 
-void PlayerDeathObserver::OnNotify(std::weak_ptr<dae::GameObject> , Event , const std::string& )
+void PlayerDeathObserver::OnNotify(std::weak_ptr<GameObject> , Event , const std::string& )
 {
 }

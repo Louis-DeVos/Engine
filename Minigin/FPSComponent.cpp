@@ -5,7 +5,7 @@
 #include <memory>
 #include <string>
 
-FPSComponent::FPSComponent(std::weak_ptr<dae::GameObject> pGameObject)
+FPSComponent::FPSComponent(std::weak_ptr<GameObject> pGameObject)
 	:m_pGameObject{pGameObject}
 	, m_FPS{}
 {
@@ -25,7 +25,7 @@ void FPSComponent::Update(float dt)
 		
 		if (m_pTextComponent.expired())
 		{
-			m_pTextComponent = m_pGameObject.lock()->getComponent<dae::TextComponent>();
+			m_pTextComponent = m_pGameObject.lock()->getComponent<TextComponent>();
 		}
 
 		if (!m_pTextComponent.expired())

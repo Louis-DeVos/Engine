@@ -4,7 +4,6 @@
 #include <Algorithm>
 #include <string>
 
-using namespace dae;
 
 unsigned int Scene::m_IdCounter = 0;
 
@@ -28,7 +27,7 @@ void Scene::Update(float dt)
 	}
 }
 
-void dae::Scene::FixedUpdate(float dt)
+void Scene::FixedUpdate(float dt)
 {
 	for (auto& object : m_Objects)
 	{
@@ -44,7 +43,7 @@ void Scene::Render() const
 	}
 }
 
-void dae::Scene::DestroyObjects()
+void Scene::DestroyObjects()
 {
 	m_Objects.erase(std::remove_if(m_Objects.begin(), m_Objects.end(), [](std::shared_ptr<GameObject> pObject) {return pObject->ToBeDestroyed(); }),m_Objects.end());
 }

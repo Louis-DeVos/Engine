@@ -3,7 +3,7 @@
 #include <SDL.h>
 
 
-dae::InputManager::~InputManager()
+InputManager::~InputManager()
 {
 	for (auto command : m_ControllerCommands)
 	{
@@ -16,7 +16,7 @@ dae::InputManager::~InputManager()
 	delete m_Stroke;
 }
 
-bool dae::InputManager::ProcessInput()
+bool InputManager::ProcessInput()
 {
 	/*ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
 	XInputGetState(0, &m_CurrentState);*/
@@ -58,7 +58,7 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
-void dae::InputManager::Destroy()
+void InputManager::Destroy()
 {
 	//for (auto command : m_Commands)
 	//{
@@ -66,7 +66,7 @@ void dae::InputManager::Destroy()
 	//}
 }
 
-void dae::InputManager::Clear()
+void InputManager::Clear()
 {
 	for (auto command : m_KeyboardCommands)
 	{
@@ -83,17 +83,17 @@ void dae::InputManager::Clear()
 
 
 
-void dae::InputManager::AddControllerCommand(Command* pCommand, unsigned button, unsigned flag)
+void InputManager::AddControllerCommand(Command* pCommand, unsigned button, unsigned flag)
 {
 	m_ControllerCommands.push_back(ControllerCommand{ button, flag, pCommand });
 }
 
-void dae::InputManager::AddKeyboardCommand(Command* pCommand, int button, unsigned flag)
+void InputManager::AddKeyboardCommand(Command* pCommand, int button, unsigned flag)
 {
 	m_KeyboardCommands.push_back(KeyboardCommand{ button, flag, pCommand });
 }
 
-//bool dae::InputManager::IsPressed(ControllerButton button) const
+//bool InputManager::IsPressed(ControllerButton button) const
 //{
 //	switch (button)
 //	{

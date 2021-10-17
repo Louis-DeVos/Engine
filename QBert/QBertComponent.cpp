@@ -5,7 +5,7 @@
 #include "ServiceLocator.h"
 #include "DiskComponent.h"
 
-QBertComponent::QBertComponent(std::weak_ptr<dae::GameObject> pGameObject)
+QBertComponent::QBertComponent(std::weak_ptr<GameObject> pGameObject)
 	:m_pGameObject(pGameObject)
 	, m_Lives{ 3 }
 {

@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include <string>
 
-LifeComponent::LifeComponent(std::weak_ptr<dae::GameObject> pGameObject)
+LifeComponent::LifeComponent(std::weak_ptr<GameObject> pGameObject)
 	: m_pGameObject(pGameObject)
 	, m_Lives{3}
 {
@@ -20,7 +20,7 @@ void LifeComponent::Update(float)
 	{
 		if (m_pTextComponent.expired())
 		{
-			m_pTextComponent = m_pGameObject.lock()->getComponent<dae::TextComponent>();
+			m_pTextComponent = m_pGameObject.lock()->getComponent<TextComponent>();
 		}
 
 
